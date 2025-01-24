@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.EmployeeMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Employee">
+        select * from employee
+        <where>
+            <if test="name != null">name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Employee">
+        insert into `employee` (name, sex, age, des, dept_id)
+        values(#{name}, #{sex}, #{age}, #{des}, #{deptId})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Employee">
+        update `employee` set name = #{name}, sex =#{sex}, age = #{age}, des = #{des}, dept_id = #{deptId} where id = #{id}
+    </update>
+
+</mapper>
