@@ -47,6 +47,11 @@
 
 <script setup>
 import router from "@/router/index.js";
+import {reactive} from "vue";
+
+const data = reactive({
+  user: JSON.parse(localStorage.getItem('pilot'))
+})
 </script>
 
 <style scoped>

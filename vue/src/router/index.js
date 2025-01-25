@@ -12,7 +12,10 @@ const router = createRouter({
         { path: 'homePage', name: 'homePage', meta:{title: '主页'}, component: () => import('../views/HomePage.vue') },
       ]},
     { path: '/404', name: 'NotFound', meta:{title: '找不到页面'}, component: () => import('../views/404.vue') },
-    { path: '/:pathMatch(.*)', redirect: '/404'}
+    { path: '/login', name: 'login', meta:{title: '登陆页面'}, component: () => import('../views/Login.vue') },
+    { path: '/register', name: 'register', meta:{title: '注册页面'}, component: () => import('../views/Register.vue') },
+
+      { path: '/:pathMatch(.*)', redirect: '/404'}
     // { path: '/home', name: 'home', component: () => import('../views/Home.vue') },
     // { path: '/test', name: 'test', component: () => import('../views/Test.vue') },
   ],

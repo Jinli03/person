@@ -99,11 +99,11 @@
             <template #default>
               <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">登录</el-button>
               <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">个人信息</el-button>
-              <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">退出</el-button>
+              <el-button @click="router.push('/login')" style="width: 120px; height: 40px">退出</el-button>
             </template>
           </el-popover>
         </div>
-        <span style="font-size: 20px; margin-top: 20px">jinli03</span>
+        <span style="font-size: 20px; margin-top: 20px">{{ data.user.name }}</span>
       </el-row>
     </div>
 <!--    头部结束-->
@@ -137,7 +137,11 @@
 
 <script setup>
 import router from "@/router/index.js";
+import {reactive} from "vue";
 
+const data = reactive({
+  user: JSON.parse(localStorage.getItem('pilot'))
+})
 </script>
 
 <style scoped>

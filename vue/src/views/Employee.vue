@@ -20,9 +20,11 @@
       <el-table :data="data.tableData" @selection-change="handleSelectionChange">
         <el-table-column type="selection" />
         <el-table-column label="名称" prop="name"></el-table-column>
+        <el-table-column label="账号" prop="username"></el-table-column>
+        <el-table-column label="角色" prop="role"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
         <el-table-column label="年龄" prop="age"></el-table-column>
-        <el-table-column label="描述" prop="des" show-overflow-tooltip></el-table-column>
+<!--        <el-table-column label="描述" prop="des" show-overflow-tooltip></el-table-column>-->
         <el-table-column label="操作" align="center">
           <template #default="scope">
             <div style="display: flex; justify-content: center; gap: 10px;">
@@ -45,10 +47,13 @@
       </div>
     </el-card>
   </div>
-  <el-dialog v-model="data.formVisible" title="信息" width="500">
-    <el-form :model="data.form" style="padding: 20px">
+  <el-dialog v-model="data.formVisible" title="信息" width="500" destroy-on-close>
+    <el-form ref="formRef" :rules="data.rules" :model="data.form" style="padding: 20px">
       <el-form-item label="名称">
         <el-input v-model="data.form.name" autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="账号" prop="username">
+        <el-input v-model="data.form.username" autocomplete="off" />
       </el-form-item>
       <el-form-item label="性别">
         <el-radio-group  v-model="data.form.sex">
@@ -56,11 +61,14 @@
           <el-radio value="女" label="女"></el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="角色">
+        <el-radio-group  v-model="data.form.role">
+          <el-radio value="用户" label="用户"></el-radio>
+          <el-radio value="管理员" label="管理员"></el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="年龄">
         <el-input-number v-model="data.form.age" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="介绍">
-        <el-input type="textarea" v-model="data.form.des" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -75,10 +83,12 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import {Delete, Edit, Search} from "@element-plus/icons-vue"
 import request from "@/utils/request.js";
 import {ElMessage, ElMessageBox} from "element-plus";
+
+const formRef = ref()
 
 const data = reactive({
   name: null,
@@ -89,10 +99,15 @@ const data = reactive({
   ],
   formVisible: false,
   form: {},
-  ids: []
+  ids: [],
+  rules: {
+    username: [
+      {required: true, message: '请输入账号', trigger: 'blur'}
+    ],
+  }
 })
 const load = () => {
-  request.get('/employee/selectPage', {
+  request.get('/user/selectPage', {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
@@ -111,12 +126,20 @@ const handleAdd = () => {
 }
 
 const save = () => {
-  data.form.id ? edit() : add()
+  formRef.value.validate((valid) => {
+    if (valid) {
+      data.form.id ? edit() : add();
+    } else {
+      ElMessage.error('请检查表单内容！');
+    }
+  })
+  // data.form.id ? edit() : add();
+
 }
 
 const add = () => {
   data.formVisible = false
-  request.post('employee/add', data.form).then(res => {
+  request.post('user/add', data.form).then(res => {
     if (res.code === '200') {
       ElMessage.success('操作成功')
       load()
@@ -128,7 +151,7 @@ const add = () => {
 
 const edit = () => {
   data.formVisible = false
-  request.put('employee/updateById', data.form).then(res => {
+  request.put('user/updateById', data.form).then(res => {
     if (res.code === '200') {
       ElMessage.success('操作成功')
       load()
@@ -140,7 +163,7 @@ const edit = () => {
 
 const del = (id) => {
   ElMessageBox.confirm('确认？', '确认', {type: 'warning'}).then( () => {
-    request.delete('employee/deleteById/' +id).then(res => {
+    request.delete('user/deleteById/' +id).then(res => {
       if (res.code === '200') {
         ElMessage.success('操作成功')
         load()
@@ -168,7 +191,7 @@ const delBatch = () => {
     return
   }
   ElMessageBox.confirm('确认？', '确认', {type: 'warning'}).then( () => {
-    request.delete('employee/deleteBatch', {
+    request.delete('user/deleteBatch', {
       data: data.ids
     }).then(res => {
       if (res.code === '200') {
