@@ -16,7 +16,7 @@
         <el-col :span="11">
           <div style="display: flex">
             <el-card style="background-color: transparent; border: none"  class="hover-card">
-              <span style="font-size: 20px; ">首页</span>
+              <span style="font-size: 20px; " @click="router.push('/manager/homePage')">首页</span>
             </el-card>
             <el-popover popper-style="background-color: transparent; border: none; backdrop-filter: blur(8px)">
               <template #reference>
@@ -98,15 +98,15 @@
             </template>
             <template #default>
               <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">登录</el-button>
-              <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">个人信息</el-button>
-              <el-button @click="router.push('/login')" style="width: 120px; height: 40px">退出</el-button>
+              <el-button @click="router.push('/manager/person')" style="width: 120px; height: 40px">个人信息</el-button>
+              <el-button @click="router.push('/manager/admin')" style="width: 120px; height: 40px">管理员信息</el-button>
+              <el-button @click="logout" style="width: 120px; height: 40px">退出</el-button>
             </template>
           </el-popover>
         </div>
-        <span style="font-size: 20px; margin-top: 20px">{{ data.user.name }}</span>
+        <span style="font-size: 20px; margin-top: 20px">{{ data.user.name}}</span>
       </el-row>
     </div>
-<!--    头部结束-->
     <div style="display: flex">
 <!--      <div style="width: 200px; border-right: 1px; solid: #ddd; min-height: calc(100vh - 60px); margin: 10px">-->
 <!--        <el-menu router :default-active="router().currentRoute.value.path" style="border: 0" class="transparent-card">-->
@@ -129,9 +129,7 @@
       <div style="flex: 1; width: 0;">
         <RouterView />
       </div>
-      <!--    下面部分结束-->
     </div>
-
   </div>
 </template>
 
@@ -142,6 +140,11 @@ import {reactive} from "vue";
 const data = reactive({
   user: JSON.parse(localStorage.getItem('pilot'))
 })
+
+const logout = () => {
+  localStorage.removeItem('pilot')
+  location.href = '/login'
+}
 </script>
 
 <style scoped>
