@@ -98,13 +98,13 @@
             </template>
             <template #default>
               <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">登录</el-button>
-              <el-button @click="router.push('/manager/person')" style="width: 120px; height: 40px">个人信息</el-button>
+              <el-button @click="router.push('/manager/person/all')" style="width: 120px; height: 40px">个人信息</el-button>
               <el-button @click="router.push('/manager/admin')" style="width: 120px; height: 40px">管理员信息</el-button>
               <el-button @click="logout" style="width: 120px; height: 40px">退出</el-button>
             </template>
           </el-popover>
         </div>
-        <span style="font-size: 20px; margin-top: 20px">{{ data.user.name}}</span>
+        <span style="font-size: 20px; margin-top: 20px">{{ data.user.name }}</span>
       </el-row>
     </div>
     <div style="display: flex">
@@ -127,7 +127,7 @@
 <!--      </div>-->
       <!--    下面部分-->
       <div style="flex: 1; width: 0;">
-        <RouterView />
+        <RouterView @updateUser="updateUser" />
       </div>
     </div>
   </div>
@@ -145,6 +145,10 @@ const logout = () => {
   localStorage.removeItem('pilot')
   location.href = '/login'
 }
+
+const updateUser = () => {
+  data.user = JSON.parse(localStorage.getItem('pilot'));
+};
 </script>
 
 <style scoped>

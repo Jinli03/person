@@ -10,8 +10,12 @@ const router = createRouter({
             { path: 'data', name: 'data', meta:{title: '数据'}, component: () => import('../views/Data.vue') },
             { path: 'employee', name: 'employee', meta:{title: '员工信息'}, component: () => import('../views/Employee.vue') },
             { path: 'admin', name: 'admin', meta:{title: '管理员信息'}, component: () => import('../views/Admin.vue') },
-            { path: 'person', name: 'person', meta:{title: '个人信息'}, component: () => import('../views/Person.vue') },
+            // { path: 'person', name: 'person', meta:{title: '个人信息'}, component: () => import('../views/Person.vue') },
             { path: 'homePage', name: 'homePage', meta:{title: '主页'}, component: () => import('../views/HomePage.vue') },
+            { path: 'person', name: 'person', meta:{title: '个人信息'}, component: () => import('../views/Person.vue'), children: [
+                    { path: 'all', name: 'all', meta:{title: '总'}, component: () => import('../views/person/All.vue') },
+                    { path: 'edit', name: 'edit', meta:{title: '修改信息'}, component: () => import('../views/person/Edit.vue') },
+                    { path: 'lock', name: 'lock', meta:{title: '修改密码'}, component: () => import('../views/person/Lock.vue') },] },
       ]},
     { path: '/404', name: 'NotFound', meta:{title: '找不到页面'}, component: () => import('../views/404.vue') },
     { path: '/login', name: 'login', meta:{title: '登陆页面'}, component: () => import('../views/Login.vue') },

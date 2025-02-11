@@ -16,6 +16,8 @@ public class User {
     private String role;
     private String avatar;
 
+    private String newPassword;
+
     @Override
     public String toString() {
         return "User{" +
@@ -92,5 +94,13 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

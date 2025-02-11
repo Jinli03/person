@@ -17,7 +17,7 @@
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.User">
-        update `user` set name = #{name}, username = #{username}, sex =#{sex}, age = #{age}, role = #{role}, avatar = #{avatar} where id = #{id}
+        update `user` set name = #{name}, username = #{username}, password = #{password}, sex =#{sex}, age = #{age}, role = #{role}, avatar = #{avatar} where id = #{id}
     </update>
 
 </mapper>

@@ -89,4 +89,14 @@ public class UserService {
         user.setRole("用户");
         userMapper.insert(user);
     }
+
+    public void updatePassword(User user) {
+        Integer id = user.getId();
+        User dataUser = this.selectById(id);
+        if (!dataUser.getPassword().equals(user.getPassword())) {
+            throw new CustomException("500", "原密码错误");
+        }
+        dataUser.setPassword(user.getNewPassword());
+        this.updateById(dataUser);
+    }
 }
