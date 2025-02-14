@@ -5,6 +5,18 @@
       <el-col :span="12">
         <el-card class="transparent-card">
           <el-form :model="data" ref="formRef" :rules="rules" label-width="120px" class="form-container">
+            <div style="display: flex; justify-content: center; margin-bottom: 10px">
+              <el-upload
+                  class="avatar-uploader"
+                  action="http://localhost:9090/files/upload"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload"
+              >
+                <img v-if="data.user.avatar" :src="data.user.avatar" class="avatar" />
+                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+              </el-upload>
+            </div>
             <el-form-item label="ID">
               <el-input v-model="data.user.id" disabled></el-input>
             </el-form-item>
@@ -104,6 +116,7 @@ const data = reactive({
     sex: '',
     age: null,
     role: '',
+    avatar: ''
   },
   // avatar: '',
   // blog: '',
@@ -130,6 +143,11 @@ const updateUser = () => {
   });
 };
 
+const handleAvatarSuccess = (res) => {
+  console.log(res.data)
+  data.user.avatar = res.data
+}
+
 const resetForm = () => {
   formRef.value?.resetFields();
 };
@@ -147,19 +165,6 @@ const resetForm = () => {
   max-width: 100%;
 }
 
-.avatar-uploader {
-  display: flex;
-  align-items: center;
-}
-
-.avatar-uploader img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-left: 10px;
-  object-fit: cover;
-}
-
 .el-button {
   margin-right: 10px;
 }
@@ -175,5 +180,36 @@ const resetForm = () => {
 h3 {
   font-size: 20px;
   margin-bottom: 20px;
+}
+
+.avatar-uploader .avatar {
+  width: 78px;
+  height: 78px;
+  display: block;
+}
+
+</style>
+
+<style>
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 78px;
+  height: 78px;
+  text-align: center;
 }
 </style>

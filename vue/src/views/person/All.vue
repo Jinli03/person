@@ -4,7 +4,7 @@
           <el-col :span="6">
             <div style="margin: 20px;">
               <el-row style="margin-bottom: 20px">
-                <el-avatar :size="80" src="https://wx1.sinaimg.cn/mw2000/006YfCtqly1hwdpd3ghlhj33lh5efnpl.jpg" />
+                <el-avatar :size="80" :src="data.user.avatar" />
                 <span>春风不语</span>
               </el-row>
               <el-row>
@@ -81,6 +81,11 @@
 
 <script setup>
 
+import {reactive} from "vue";
+
+const data = reactive({
+  user: JSON.parse(localStorage.getItem('pilot'))
+})
 </script>
 
 <style scoped>

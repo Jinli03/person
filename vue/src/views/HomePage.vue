@@ -34,7 +34,7 @@
     <el-col :span="12">
       <div style="margin-top: 150px; margin-left: 300px">
         <div class="block">
-          <el-avatar :size="200" src="https://wx1.sinaimg.cn/mw2000/006YfCtqly1hwdpd3ghlhj33lh5efnpl.jpg" />
+          <el-avatar :size="200" :src="data.user.avatar" />
         </div>
       </div>
     </el-col>

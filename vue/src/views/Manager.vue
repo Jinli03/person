@@ -94,7 +94,7 @@
               popper-style="background-color: transparent; border: none; backdrop-filter: blur(8px)"
           >
             <template #reference>
-              <el-avatar src="https://wx1.sinaimg.cn/mw2000/006YfCtqly1hwdpd3ghlhj33lh5efnpl.jpg" class="hover-avatar"/>
+              <el-avatar :src="data.user.avatar" class="hover-avatar"/>
             </template>
             <template #default>
               <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">登录</el-button>

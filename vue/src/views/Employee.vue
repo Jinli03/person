@@ -20,6 +20,11 @@
       <el-table :data="data.tableData" @selection-change="handleSelectionChange">
         <el-table-column type="selection" />
         <el-table-column label="名称" prop="name"></el-table-column>
+        <el-table-column label="头像" prop="avatar">
+          <template #default="scope">
+            <img v-if="scope.row.avatar" :src="scope.row.avatar" style="display: block; width: 40px; height: 40px; border-radius: 50%">
+          </template>
+        </el-table-column>
         <el-table-column label="账号" prop="username"></el-table-column>
         <el-table-column label="角色" prop="role"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
@@ -49,6 +54,17 @@
   </div>
   <el-dialog v-model="data.formVisible" title="信息" width="500" destroy-on-close>
     <el-form ref="formRef" :rules="data.rules" :model="data.form" style="padding: 20px">
+      <div style="display: flex; justify-content: center; margin-bottom: 10px">
+        <el-upload
+            class="avatar-uploader"
+            action="http://localhost:9090/files/upload"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+        >
+          <img v-if="data.form.avatar" :src="data.form.avatar" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        </el-upload>
+      </div>
       <el-form-item label="名称">
         <el-input v-model="data.form.name" autocomplete="off" />
       </el-form-item>
@@ -91,6 +107,7 @@ import {ElMessage, ElMessageBox} from "element-plus";
 const formRef = ref()
 
 const data = reactive({
+  user: JSON.parse(localStorage.getItem('pilot')),
   name: null,
   pageNum: 1,
   pageSize: 5,
@@ -147,6 +164,11 @@ const add = () => {
       ElMessage.error(res.msg)
     }
   })
+}
+
+const handleAvatarSuccess = (res) => {
+  console.log(res.data)
+  data.user.avatar = res.data
 }
 
 const edit = () => {
@@ -217,5 +239,35 @@ const delBatch = () => {
 
 .transparent-card:hover {
   background-color: rgba(255, 255, 255, 0.9); /* 鼠标悬停时稍微减少透明度 */
+}
+.avatar-uploader .avatar {
+  width: 78px;
+  height: 78px;
+  display: block;
+}
+
+</style>
+
+<style>
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 78px;
+  height: 78px;
+  text-align: center;
 }
 </style>
