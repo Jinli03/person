@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ArticleMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Article">
+        select * from article
+        <where>
+            <if test="title != null">title like concat('%', #{title}, '%')</if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Article">
+        insert into `article` (username, kind, title, des, cover, content, list, time)
+        values(#{username}, #{kind}, #{title}, #{des}, #{cover}, #{content}, #{list}, #{time})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Article">
+        update `article` set username = #{username}, kind = #{kind}, title = #{title}, des = #{des}, cover = #{cover}, content = #{content}, list = #{list}, time = #{time} where id = #{id}
+    </update>
+
+</mapper>

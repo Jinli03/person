@@ -29,10 +29,16 @@
         <el-table-column label="角色" prop="role"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
         <el-table-column label="年龄" prop="age"></el-table-column>
-<!--        <el-table-column label="描述" prop="des" show-overflow-tooltip></el-table-column>-->
+        <el-table-column label="内容" prop="content">
+          <template #default="scope">
+            <div v-html="scope.row.content"></div>
+          </template>
+        </el-table-column>
+        <el-table-column label="描述" prop="des" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" align="center">
           <template #default="scope">
             <div style="display: flex; justify-content: center; gap: 10px;">
+              <el-button type="primary" :icon="Edit" circle @click="editContent(scope.row)"></el-button>
               <el-button type="primary" :icon="Edit" circle @click="handleEdit(scope.row)"></el-button>
               <el-button type="danger" :icon="Delete" circle @click="del(scope.row.id)"></el-button>
             </div>
@@ -96,13 +102,42 @@
       </div>
     </template>
   </el-dialog>
+  <el-dialog v-model="data.contentVisible" title="内容" width="500" destroy-on-close>
+    <div style="padding: 20px">
+      <div style="border: 1px solid #ccc">
+        <Toolbar
+            style="border-bottom: 1px solid #ccc"
+            :editor="editorRef"
+            :defaultConfig="editorConfig"
+            :mode="mode"
+        />
+        <Editor
+            style="height: 500px; overflow-y: hidden;"
+            v-model="data.form.content"
+            :defaultConfig="editorConfig"
+            :mode="mode"
+            @onCreated="handleCreated"
+        />
+      </div>
+    </div>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="data.contentVisible = false">取消</el-button>
+        <el-button type="primary" @click="saveContent">确定</el-button>
+      </div>
+    </template>
+  </el-dialog>
+
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import {Delete, Edit, Search} from "@element-plus/icons-vue"
 import request from "@/utils/request.js";
 import {ElMessage, ElMessageBox} from "element-plus";
+import '@wangeditor/editor/dist/css/style.css';
+import {onBeforeUnmount, ref, shallowRef} from "vue";
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 
 const formRef = ref()
 
@@ -115,14 +150,31 @@ const data = reactive({
   tableData: [
   ],
   formVisible: false,
-  form: {},
+  contentVisible: false,
+  form: [
+    {id: 1, content: '1', name: '1'},
+  ],
   ids: [],
   rules: {
     username: [
       {required: true, message: '请输入账号', trigger: 'blur'}
     ],
-  }
+  },
 })
+
+const baseUrl = 'http://localhost:9090'
+const editorRef = shallowRef()
+const mode = 'default'
+const editorConfig = { MENU_CONF: {} }
+// editorConfig.MENU_CONF['uploadImage'] = {
+//   server: baseUrl + '/files/wang/upload',
+//   fileName: 'file'
+// }
+const handleCreated = (editor) => {
+  editorRef.value = editor
+}
+
+
 const load = () => {
   request.get('/user/selectPage', {
     params: {
@@ -169,6 +221,15 @@ const add = () => {
 const handleAvatarSuccess = (res) => {
   console.log(res.data)
   data.user.avatar = res.data
+}
+
+const editContent = (row) => {
+  data.form = row
+  data.contentVisible = true
+}
+
+const saveContent = () => {
+  data.contentVisible = false
 }
 
 const edit = () => {

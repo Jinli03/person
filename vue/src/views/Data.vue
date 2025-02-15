@@ -46,6 +46,7 @@ const data = reactive({
   pageSize: 5,
   total: 0,
   tableData: [
+    {id: 1, date: '2024-10-11', name: '1', address: '河北'}
   ],
   employeeList: []
 })

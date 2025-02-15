@@ -49,7 +49,7 @@
                 </el-card>
               </template>
               <template #default>
-                <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">知识分享</el-button>
+                <el-button @click="router.push('/manager/share')" style="width: 120px; height: 40px">知识分享</el-button>
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">生活展示</el-button>
               </template>
             </el-popover>
