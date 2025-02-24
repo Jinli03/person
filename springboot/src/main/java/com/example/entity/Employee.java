@@ -13,6 +13,7 @@ public class Employee {
     private Integer age;
     private String des;
     private Integer deptId;
+    private String deptName;
 
     @Override
     public String toString() {
@@ -24,6 +25,14 @@ public class Employee {
                 ", des='" + des + '\'' +
                 ", deptId=" + deptId +
                 '}';
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
     public Integer getId() {

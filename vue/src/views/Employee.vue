@@ -14,6 +14,8 @@
       <el-row>
         <el-button type="success" @click="handleAdd">新增</el-button>
         <el-button type="danger" @click="delBatch">批量删除</el-button>
+        <el-button type="success" @click="handleAdd">导入</el-button>
+        <el-button type="danger" @click="delBatch">导出</el-button>
       </el-row>
     </el-card>
     <el-card style="margin: 15px" class="transparent-card">
@@ -29,6 +31,7 @@
         <el-table-column label="角色" prop="role"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
         <el-table-column label="年龄" prop="age"></el-table-column>
+        <el-table-column label="部门" prop="deptName"></el-table-column>
         <el-table-column label="内容" prop="content">
           <template #default="scope">
             <div v-html="scope.row.content"></div>
@@ -91,6 +94,12 @@
       </el-form-item>
       <el-form-item label="年龄">
         <el-input-number v-model="data.form.age" autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="部门">
+        <el-select v-model="data.form.deptId">
+          <el-option v-for="item in data.departmentList" :key="item.id" :label="item.name" :value="item.id">
+          </el-option>
+        </el-select>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -160,6 +169,11 @@ const data = reactive({
       {required: true, message: '请输入账号', trigger: 'blur'}
     ],
   },
+  departmentList: []
+})
+
+request.get('/department/selectAll').then(res => {
+  data.departmentList = res.data
 })
 
 const baseUrl = 'http://localhost:9090'
@@ -176,7 +190,7 @@ const handleCreated = (editor) => {
 
 
 const load = () => {
-  request.get('/user/selectPage', {
+  request.get('/employee/selectPage', {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
@@ -234,7 +248,7 @@ const saveContent = () => {
 
 const edit = () => {
   data.formVisible = false
-  request.put('user/updateById', data.form).then(res => {
+  request.put('employee/updateById', data.form).then(res => {
     if (res.code === '200') {
       ElMessage.success('操作成功')
       load()

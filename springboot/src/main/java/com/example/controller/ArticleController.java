@@ -7,7 +7,6 @@ package com.example.controller;
 
 import com.example.common.Result;
 import com.example.entity.Article;
-import com.example.service.AdminService;
 import com.example.service.ArticleService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;

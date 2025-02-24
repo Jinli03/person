@@ -4,24 +4,27 @@
 *@date 2025/2/14 23:00
 -->
 <template>
+  <el-affix :offset="120" style="margin-left: 100px">
+    <el-button type="primary" size="large" :icon="Plus" circle></el-button>
+  </el-affix>
   <div>
-    <el-card style="margin: 15px" class="transparent-card">
-      <el-row style="margin-bottom: 20px">
-        <el-input style="width: 240px" v-model="data.title" placeholder="请输入标题" prefix-icon="Search"></el-input>
-        <el-button type="success" @click="load">查询</el-button>
-        <el-button type="warning">重置</el-button>
-      </el-row>
-      <el-row>
-        <el-button type="success" @click="handleAdd">新增</el-button>
-        <el-button type="danger" @click="delBatch">批量删除</el-button>
-      </el-row>
+    <el-card style="margin: 0 auto; margin-bottom: 30px; width: 35%;" class="transparent-card">
+<!--      <el-row style="margin-bottom: 20px">-->
+<!--        <el-input style="width: 240px" v-model="data.title" placeholder="请输入标题" prefix-icon="Search"></el-input>-->
+<!--        <el-button type="success" @click="load">查询</el-button>-->
+<!--        <el-button type="warning">重置</el-button>-->
+<!--      </el-row>-->
+<!--      <el-row>-->
+<!--        <el-button type="success" @click="handleAdd">新增</el-button>-->
+<!--        <el-button type="danger" @click="delBatch">批量删除</el-button>-->
+<!--      </el-row>-->
       <div>
-        <h1>文章种类</h1>
+<!--        <h1>文章种类</h1>-->
         <div v-if="data.kinds.length">
           <el-button
               v-for="(item, index) in data.kinds"
               :key="index"
-              @click="handleButtonClick(item.kind)"
+              @click="load(item.kind)"
               :type="getButtonType(item.kind)"
               class="category-button"
           >
@@ -32,6 +35,34 @@
           <p>没有数据可显示。</p>
         </div>
       </div>
+    </el-card>
+
+    <el-card class="transparent-card" v-for="(item, index) in data.tableData" :key="index" style="width: 35%; height: 280px; margin: 0 auto; margin-bottom: 20px; padding-top: 0px; cursor: pointer" @click="router.push('/manager/person/all')">
+      <el-row>
+        <el-col :span="12">
+          <div style="margin: 5px">
+            <div style="display: flex; align-items: center; margin-bottom: 5px">
+              <div>
+                <img style="width:10px;" src="@/assets/share/time.png">
+              </div>
+              <span style="font-size: 10px; margin-left: 5px">发布时间：{{ item.time }}</span>
+            </div>
+            <div style="margin-bottom: 5px">
+              <span style="font-size: 20px; font-weight: bold">{{ item.title }}</span>
+            </div>
+            <div style="margin-bottom: 5px; height: 160px">
+              <span style="font-size: 20px">{{ item.des }}</span>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 5px">
+              <img style="width:10px; margin-right: 5px" src="@/assets/share/tag.png">
+              {{ item.kind }}
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <img style="width: 250px" :src="item.cover" class="hover-img">
+        </el-col>
+      </el-row>
     </el-card>
     <el-card style="margin: 15px" class="transparent-card">
       <el-table :data="data.tableData" @selection-change="handleSelectionChange">
@@ -98,6 +129,12 @@
       <el-form-item label="内容" prop="内容">
         <el-input v-model="data.form.content" autocomplete="off" placeholder="请输入内容"/>
       </el-form-item>
+      <el-form-item label="隐私" prop="privacy">
+      <el-radio-group v-model="data.form.privacy">
+        <el-radio value="公开">公开</el-radio>
+        <el-radio value="仅自己可见">仅自己可见</el-radio>
+      </el-radio-group>
+      </el-form-item>
     </el-form>
     <template #footer>
       <div class="dialog-footer">
@@ -145,12 +182,13 @@
 
 <script setup>
 import { reactive } from "vue";
-import {Delete, Edit, Search} from "@element-plus/icons-vue"
+import {Delete, Edit, Plus, Search} from "@element-plus/icons-vue"
 import request from "@/utils/request.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import '@wangeditor/editor/dist/css/style.css';
 import {onBeforeUnmount, ref, shallowRef} from "vue";
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
+import router from "@/router/index.js";
 
 const formRef = ref()
 
@@ -191,12 +229,13 @@ const view = (content) => {
   data.viewVisible = true
 }
 
-const load = () => {
+const load = (kind) => {
+  data.kind = kind
   request.get('/article/selectPage', {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
-      title: data.title,
+      kind: data.kind,
     }
   }).then(res => {
     console.log(res.data)
@@ -214,8 +253,8 @@ load()
 const getButtonType = (kind) => {
   // 定义逻辑来根据种类返回不同的按钮类型
   const typeMapping = {
-    test: 'primary', // 科技类的按钮类型是 primary
-    science: 'warning',    // 科学类的按钮类型是 warning
+    测试: 'primary', // 科技类的按钮类型是 primary
+    开发: 'warning',    // 科学类的按钮类型是 warning
     literature: 'success', // 文学类的按钮类型是 success
   };
   return typeMapping[kind] || 'info'; // 默认类型是 info
@@ -322,12 +361,13 @@ const delBatch = () => {
 </script>
 
 <style scoped>
+
 .transparent-card {
   background-color: rgba(255, 255, 255, 0.7); /* 半透明白色背景 */
   border: 1px solid rgba(0, 0, 0, 0.1); /* 半透明边框 */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影以提升层次感 */
   border-radius: 8px; /* 圆角处理 */
-  padding: 15px; /* 内边距 */
+  padding: 5px; /* 内边距 */
   transition: background-color 0.3s ease; /* 平滑过渡 */
 }
 
@@ -378,5 +418,12 @@ const delBatch = () => {
   color: white; /* 文字颜色变为白色 */
 }
 
+.hover-img {
+  transition: transform 0.8s ease-in-out; /* 添加过渡效果 */
+}
+
+.hover-img:hover {
+  transform: scale(1.2); /* 鼠标悬停时放大 1.2 倍 */
+}
 
 </style>

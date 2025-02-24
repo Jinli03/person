@@ -3,58 +3,201 @@
     <el-card style="margin: 15px" class="transparent-card">
       <el-row>
         <el-input style="width: 240px" v-model="data.name" placeholder="请输入名称" prefix-icon="Search"></el-input>
-        <el-button type="success">查询</el-button>
+        <el-button type="success" @click="load">查询</el-button>
         <el-button type="warning">重置</el-button>
       </el-row>
       <el-row>
-        <el-button type="success">新增</el-button>
-        <el-button type="danger">删除</el-button>
+        <el-button type="success" @click="handleAdd">新增</el-button>
+        <el-button type="danger" @click="delBatch">批量删除</el-button>
       </el-row>
     </el-card>
     <el-card style="margin: 15px" class="transparent-card">
-      <el-table :data="data.tableData">
+      <el-table :data="data.tableData"  @selection-change="handleSelectionChange">
+        <el-table-column type="selection" />
+        <el-table-column label="id" prop="id"></el-table-column>
         <el-table-column label="名称" prop="name"></el-table-column>
-        <el-table-column label="性别" prop="sex"></el-table-column>
-        <el-table-column label="年龄" prop="age"></el-table-column>
-        <el-table-column label="描述" prop="des"></el-table-column>
-        <el-table-column label="部门" prop="deptName"></el-table-column>
+        <el-table-column label="操作" align="center">
+          <template #default="scope">
+            <div style="display: flex; justify-content: center; gap: 10px;">
+              <el-button type="primary" :icon="Edit" circle @click="editContent(scope.row)"></el-button>
+              <el-button type="primary" :icon="Edit" circle @click="handleEdit(scope.row)"></el-button>
+              <el-button type="danger" :icon="Delete" circle @click="del(scope.row.id)"></el-button>
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
       <div style="margin-top: 20px">
         <el-pagination
-            v-model:current-page="data.currentPage"
+            @current-change="load"
+            @size-change="load"
+            v-model:current-page="data.pageNum"
             v-model:page-size="data.pageSize"
             :page-sizes="[5, 10, 15, 20]"
-            :disabled="disabled"
-            :background="background"
             layout="total, sizes, prev, pager, next, jumper"
             :total="data.total">
         </el-pagination>
       </div>
     </el-card>
   </div>
+  <el-dialog v-model="data.formVisible" title="信息" width="500" destroy-on-close>
+    <el-form :model="data.form" ref="formRef" style="padding: 20px">
+      <div style="display: flex; justify-content: center; margin-bottom: 10px">
+      </div>
+      <el-form-item label="名称">
+        <el-input v-model="data.form.name" autocomplete="off" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="data.formVisible = false">取消</el-button>
+        <el-button type="primary" @click="save">
+          确定
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
+
 </template>
 
 <script setup>
 import { reactive } from "vue";
-import { Search } from "@element-plus/icons-vue"
+import {Delete, Edit, Search} from "@element-plus/icons-vue"
 import request from "@/utils/request.js";
+import {ElMessage, ElMessageBox} from "element-plus";
+import '@wangeditor/editor/dist/css/style.css';
+import {onBeforeUnmount, ref, shallowRef} from "vue";
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
+
+const formRef = ref()
 
 const data = reactive({
+  user: JSON.parse(localStorage.getItem('pilot')),
   name: null,
-  currentPage: 1,
   pageNum: 1,
   pageSize: 5,
-  total: 0,
+  total: 10,
   tableData: [
-    {id: 1, date: '2024-10-11', name: '1', address: '河北'}
   ],
-  employeeList: []
-})
-request.get('/employee/selectAll').then(res => {
-  console.log(res)
-  data.employeeList = res.data
+  formVisible: false,
+  contentVisible: false,
+  form: [
+    {id: 1, content: '1', name: '1'},
+  ],
+  ids: [],
 })
 
+
+const load = () => {
+  request.get('/department/selectPage', {
+    params: {
+      pageNum: data.pageNum,
+      pageSize: data.pageSize,
+      name: data.name
+    }
+  }).then(res => {
+    console.log(res.data)
+    data.tableData = res.data.list
+    data.total = res.data.total
+  })
+}
+load()
+const handleAdd = () => {
+  data.formVisible = true
+  data.form = {}
+}
+
+const save = () => {
+  formRef.value.validate((valid) => {
+    if (valid) {
+      data.form.id ? edit() : add();
+    } else {
+      ElMessage.error('请检查表单内容！');
+    }
+  })
+  // data.form.id ? edit() : add();
+
+}
+
+const add = () => {
+  data.formVisible = false
+  request.post('department/add', data.form).then(res => {
+    if (res.code === '200') {
+      ElMessage.success('操作成功')
+      load()
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+
+const handleAvatarSuccess = (res) => {
+  console.log(res.data)
+  data.form.avatar = res.data
+}
+
+const editContent = (row) => {
+  data.form = row
+  data.contentVisible = true
+}
+
+const saveContent = () => {
+  data.contentVisible = false
+}
+
+const edit = () => {
+  data.formVisible = false
+  request.put('department/updateById', data.form).then(res => {
+    if (res.code === '200') {
+      ElMessage.success('操作成功')
+      load()
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+
+const del = (id) => {
+  ElMessageBox.confirm('确认？', '确认', {type: 'warning'}).then( () => {
+    request.delete('department/deleteById/' +id).then(res => {
+      if (res.code === '200') {
+        ElMessage.success('操作成功')
+        load()
+      } else {
+        ElMessage.error(res.msg)
+      }
+    })
+  }).catch()
+}
+
+const handleEdit = (row) => {
+  data.form = JSON.parse(JSON.stringify(row)) //深拷贝
+  data.formVisible = true
+}
+
+const handleSelectionChange = (rows) => {
+  console.log(rows)
+  data.ids = rows.map(row => row.id)
+  console.log(data.ids)
+}
+
+const delBatch = () => {
+  if (data.ids.length === 0) {
+    ElMessage.warning('请选择数据')
+    return
+  }
+  ElMessageBox.confirm('确认？', '确认', {type: 'warning'}).then( () => {
+    request.delete('department/deleteBatch', {
+      data: data.ids
+    }).then(res => {
+      if (res.code === '200') {
+        ElMessage.success('操作成功')
+        load()
+      } else {
+        ElMessage.error(res.msg)
+      }
+    })
+  }).catch()
+}
 </script>
 
 <style scoped>
@@ -69,5 +212,35 @@ request.get('/employee/selectAll').then(res => {
 
 .transparent-card:hover {
   background-color: rgba(255, 255, 255, 0.9); /* 鼠标悬停时稍微减少透明度 */
+}
+.avatar-uploader .avatar {
+  width: 78px;
+  height: 78px;
+  display: block;
+}
+
+</style>
+
+<style>
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 78px;
+  height: 78px;
+  text-align: center;
 }
 </style>

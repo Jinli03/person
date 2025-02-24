@@ -15,6 +15,7 @@ public class Article {
     private String content;
     private String list;
     private String time;
+    private String privacy;
 
     public Integer getId() {
         return id;
@@ -40,20 +41,20 @@ public class Article {
         this.kind = kind;
     }
 
-    public String getDes() {
-        return des;
-    }
-
-    public void setDes(String des) {
-        this.des = des;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
     }
 
     public String getCover() {
@@ -86,5 +87,13 @@ public class Article {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
     }
 }
