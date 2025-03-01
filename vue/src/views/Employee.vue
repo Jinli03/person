@@ -14,8 +14,14 @@
       <el-row>
         <el-button type="success" @click="handleAdd">新增</el-button>
         <el-button type="danger" @click="delBatch">批量删除</el-button>
-        <el-button type="success" @click="handleAdd">导入</el-button>
-        <el-button type="danger" @click="delBatch">导出</el-button>
+        <el-upload
+            action="http://localhost:9090/employee/import"
+            :show-file-list="false"
+            :on-success="importData"
+        >
+          <el-button type="success">导入</el-button>
+        </el-upload>
+        <el-button type="danger" @click="exportData">导出</el-button>
       </el-row>
     </el-card>
     <el-card style="margin: 15px" class="transparent-card">
@@ -141,7 +147,7 @@
 
 <script setup>
 import { reactive } from "vue";
-import {Delete, Edit, Search} from "@element-plus/icons-vue"
+import {Delete, Edit, Plus, Search} from "@element-plus/icons-vue"
 import request from "@/utils/request.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import '@wangeditor/editor/dist/css/style.css';
@@ -175,6 +181,19 @@ const data = reactive({
 request.get('/department/selectAll').then(res => {
   data.departmentList = res.data
 })
+
+const exportData = () => {
+  window.open("http://localhost:9090/employee/export")
+}
+
+const importData = (res) => {
+  if (res.code === '200') {
+    ElMessage.success("导入成功")
+    load()
+  } else {
+    ElMessage.error("导入失败")
+  }
+}
 
 const baseUrl = 'http://localhost:9090'
 const editorRef = shallowRef()
@@ -288,7 +307,7 @@ const delBatch = () => {
     return
   }
   ElMessageBox.confirm('确认？', '确认', {type: 'warning'}).then( () => {
-    request.delete('user/deleteBatch', {
+    request.delete('employee/deleteBatch', {
       data: data.ids
     }).then(res => {
       if (res.code === '200') {

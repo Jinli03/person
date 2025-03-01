@@ -13,6 +13,9 @@ public interface ArticleMapper {
     List<Article> selectAll(Article article);
 
     @Select("select * from `article` where title = #{title}")
+    Article selectByTitle(Integer id);
+
+    @Select("select * from `article` where id = #{id}")
     Article selectById(Integer id);
 
     void insert(Article article);
@@ -27,4 +30,7 @@ public interface ArticleMapper {
 
     @Select("SELECT kind, COUNT(*) AS articlecount FROM article GROUP BY kind")
     List<Map<String, Object>> getArticleCountByKind();
+
+    @Select("select count(*) from `article` where time like'%${date}%'")
+    Integer selectCountByDate(String date);
 }

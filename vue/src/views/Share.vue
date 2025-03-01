@@ -5,7 +5,7 @@
 -->
 <template>
   <el-affix :offset="120" style="margin-left: 100px">
-    <el-button type="primary" size="large" :icon="Plus" circle></el-button>
+    <el-button type="primary" size="large" :icon="Plus" circle @click="handleAdd"></el-button>
   </el-affix>
   <div>
     <el-card style="margin: 0 auto; margin-bottom: 30px; width: 35%;" class="transparent-card">
@@ -37,7 +37,7 @@
       </div>
     </el-card>
 
-    <el-card class="transparent-card" v-for="(item, index) in data.tableData" :key="index" style="width: 35%; height: 280px; margin: 0 auto; margin-bottom: 20px; padding-top: 0px; cursor: pointer" @click="router.push('/manager/person/all')">
+    <el-card class="transparent-card" v-for="(item, index) in data.tableData" :key="index" style="width: 35%; height: 300px; margin: 0 auto; margin-bottom: 20px; padding-top: 0px; cursor: pointer" @click="router.push('/manager/person/all')">
       <el-row>
         <el-col :span="12">
           <div style="margin: 5px">
@@ -56,6 +56,12 @@
             <div style="display: flex; align-items: center; margin-bottom: 5px">
               <img style="width:10px; margin-right: 5px" src="@/assets/share/tag.png">
               {{ item.kind }}
+            </div>
+            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 5px;">
+              <el-button type="primary" :icon="Document" circle @click.stop="editContent(item)"></el-button>
+              <el-button type="primary" :icon="Edit" circle @click.stop="handleEdit(item)"></el-button>
+              <el-button type="danger" :icon="Delete" circle @click.stop="del(item.id)"></el-button>
+              <el-button type="success" :icon="Reading" circle @click.stop="router.push(`/manager/article/${item.id}`)"></el-button>
             </div>
           </div>
         </el-col>
@@ -182,7 +188,7 @@
 
 <script setup>
 import { reactive } from "vue";
-import {Delete, Edit, Plus, Search} from "@element-plus/icons-vue"
+import {Delete, Edit, Plus, Search, Document, Reading} from "@element-plus/icons-vue"
 import request from "@/utils/request.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import '@wangeditor/editor/dist/css/style.css';
