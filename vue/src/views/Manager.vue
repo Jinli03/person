@@ -25,7 +25,7 @@
                 </el-card>
               </template>
               <template #default>
-                <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">生活</el-button>
+                <el-button @click="router.push('/manager/task')" style="width: 120px; height: 40px">任务</el-button>
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">学习</el-button>
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">技能</el-button>
               </template>
@@ -40,7 +40,7 @@
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">健康</el-button>
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">学习时长</el-button>
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">技能练习</el-button>
-                <el-button @click="router.push('/manager/book')" style="width: 120px; height: 40px">阅读记录</el-button>
+                <el-button @click="router.push('/manager/books')" style="width: 120px; height: 40px">阅读记录</el-button>
                 <el-button @click="router.push('/manager/book')" style="width: 120px; height: 40px">勋章墙</el-button>
               </template>
             </el-popover>

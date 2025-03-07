@@ -7,7 +7,7 @@ package com.example.entity;
 
 public class Book {
     private Integer id;
-    private String user;
+    private String username;
     private String name;
     private String author;
     private String des;
@@ -17,6 +17,15 @@ public class Book {
     private float duration;
     private String permission;
     private Integer bookId;
+    private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public Integer getId() {
         return id;
@@ -26,12 +35,12 @@ public class Book {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {

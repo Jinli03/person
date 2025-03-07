@@ -1,20 +1,19 @@
 /**
  * 功能：
  * 作者：Jinli
- * 日期： 2025/2/14 22:36
+ * 日期： 2025/3/4 19:23
  */
 package com.example.entity;
 
-public class Article {
+public class Notion {
     private Integer id;
     private String username;
-    private String kind;
-    private String title;
-    private String des;
-    private String cover;
+    private String name;
     private String content;
-    private String list;
+    private String think;
     private String time;
+    private Integer bookId;
+    private Integer likes;
     private String permission;
 
     public Integer getId() {
@@ -33,36 +32,12 @@ public class Article {
         this.username = username;
     }
 
-    public String getKind() {
-        return kind;
+    public String getName() {
+        return name;
     }
 
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDes() {
-        return des;
-    }
-
-    public void setDes(String des) {
-        this.des = des;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getContent() {
@@ -73,12 +48,12 @@ public class Article {
         this.content = content;
     }
 
-    public String getList() {
-        return list;
+    public String getThink() {
+        return think;
     }
 
-    public void setList(String list) {
-        this.list = list;
+    public void setThink(String think) {
+        this.think = think;
     }
 
     public String getTime() {
@@ -89,11 +64,27 @@ public class Article {
         this.time = time;
     }
 
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
+
     public String getPermission() {
         return permission;
     }
 
     public void setPermission(String permission) {
         this.permission = permission;
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 }

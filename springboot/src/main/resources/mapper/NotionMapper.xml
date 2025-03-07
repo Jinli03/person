@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.NotionMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Notion">
+        select * from notion
+        <where>
+            <if test="kind != null">title like concat('%', #{kind}, '%')</if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Notion">
+        insert into `notion` (username, name, content, think, time, book_id, likes, permission)
+        values(#{username}, #{name}, #{content}, #{think}, #{time},  #{bookId}, #{likes}, #{permission})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Notion">
+        update `notion` set username = #{username}, name = #{name}, content = #{content}, think = #{think}, time = #{time}, book_id = #{bookId}, likes = #{likes}, permission = #{permission} where id = #{id}
+    </update>
+
+</mapper>
