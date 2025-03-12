@@ -156,7 +156,7 @@ const updateUser = () => {
 <style scoped>
 
 .page-container {
-  background-image: url("https://haowallpaper.com/link/common/file/previewFileImg/16089576883735936");
+  background-image: url("https://haowallpaper.com/link/common/file/previewFileImg/16288183581003136");
   background-size: cover; /* 图片完全覆盖 */
   background-position: center; /* 居中显示 */
   background-attachment: scroll; /* 背景图片随滚动移动 */

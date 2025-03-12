@@ -16,6 +16,7 @@ spring:
       transaction:
         management:
           enabled: true  # 确保启用事务管理
+          pool-name: HikariCP
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

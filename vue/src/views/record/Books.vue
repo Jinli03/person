@@ -106,7 +106,7 @@ load()
 }
 
 .cover-title {
-  font-size: 55px; /* 大标题 */
+  font-size: 40px; /* 大标题 */
   font-weight: bold;
   margin: 0;
   color: #ffffff; /* 文字改为白色以在黑色背景上更清晰 */
