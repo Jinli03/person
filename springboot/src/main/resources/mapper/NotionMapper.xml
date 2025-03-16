@@ -7,7 +7,7 @@
     <select id="selectAll" resultType="com.example.entity.Notion">
         select * from notion
         <where>
-            <if test="kind != null">title like concat('%', #{kind}, '%')</if>
+             username = #{username}
         </where>
     </select>
 

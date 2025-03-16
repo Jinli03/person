@@ -5,6 +5,10 @@
  */
 package com.example.entity;
 
+import cn.hutool.core.date.DateTime;
+
+import java.time.LocalDateTime;
+
 public class Book {
     private Integer id;
     private String username;
@@ -12,8 +16,8 @@ public class Book {
     private String author;
     private String des;
     private String cover;
-    private String start;
-    private String end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private float duration;
     private String permission;
     private Integer bookId;
@@ -75,19 +79,19 @@ public class Book {
         this.cover = cover;
     }
 
-    public String getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public String getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 

@@ -18,6 +18,7 @@ const router = createRouter({
             { path: 'article/:id', name: 'article', meta:{title: '文章详情'}, component: () => import('../views/share/Article.vue') },
             { path: 'echarts', name: 'echarts', meta:{title: '图表'}, component: () => import('../views/Echarts.vue') },
             { path: 'task', name: 'task', meta:{title: '任务'}, component: () => import('../views/goal/Task.vue') },
+            { path: 'habit', name: 'habit', meta:{title: '习惯'}, component: () => import('../views/Habit.vue') },
             { path: 'person', name: 'person', meta:{title: '个人信息'}, component: () => import('../views/Person.vue'), children: [
                     { path: 'all', name: 'all', meta:{title: '总'}, component: () => import('../views/person/All.vue') },
                     { path: 'edit', name: 'edit', meta:{title: '修改信息'}, component: () => import('../views/person/Edit.vue') },

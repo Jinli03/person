@@ -27,6 +27,6 @@ public interface TaskMapper {
     @Select("select * from `task` where username = #{username}")
     Task selectByUsername(String username);
 
-    @Select("SELECT * FROM `task` WHERE `start` BETWEEN #{start} AND #{end}")
-    List<Task> findAllTasks(LocalDateTime start, LocalDateTime end);
+    @Select("SELECT * FROM `task` WHERE `start` BETWEEN #{start} AND #{end} AND username = #{username}")
+    List<Task> findAllTasks(LocalDateTime start, LocalDateTime end, String username);
 }

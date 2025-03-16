@@ -28,7 +28,7 @@ public class TaskService {
     private TaskMapper taskMapper;
 
 //    public List<Task> selectAll(Task task) {
-//        List<Task> list = taskMapper.findAllTasks();
+//        List<Task> list = taskMapper.selectAll(task);
 //        return list;
 //    }
 
@@ -49,12 +49,11 @@ public class TaskService {
     }
 
     public void add(Task task) {
-        task.setStart(DateUtil.parseLocalDateTime(DateUtil.now()));
+        task.setState("未完成");
         taskMapper.insert(task);
     }
 
     public void updateById(Task task) {
-        task.setStart(DateUtil.parseLocalDateTime(DateUtil.now()));
         taskMapper.updateById(task);
     }
 
@@ -68,13 +67,13 @@ public class TaskService {
         }
     }
 
-    public Map<String, Map<String, List<Task>>> loadTasks() {
+    public Map<String, Map<String, List<Task>>> loadTasks(String username) {
         LocalDate today = LocalDate.now(); // 例如 2025-03-11
         LocalDateTime startOfDay = today.atStartOfDay(); // 2025-03-11 00:00:00
         LocalDateTime endOfDay = today.atTime(23, 59, 59); // 2025-03-11 23:59:59
 
         // 查询当天的任务
-        List<Task> allTasks = taskMapper.findAllTasks(startOfDay, endOfDay);
+        List<Task> allTasks = taskMapper.findAllTasks(startOfDay, endOfDay, username);
 
         Map<String, Map<String, List<Task>>> taskMap = new HashMap<>();
 
@@ -95,5 +94,28 @@ public class TaskService {
     }
 
 
+    public Map<String, Map<String, List<Task>>> loadPriorityTasks(String username) {
+        LocalDate today = LocalDate.now(); // 例如 2025-03-11
+        LocalDateTime startOfDay = today.atStartOfDay(); // 2025-03-11 00:00:00
+        LocalDateTime endOfDay = today.atTime(23, 59, 59); // 2025-03-11 23:59:59
 
+        // 查询当天的任务
+        List<Task> allTasks = taskMapper.findAllTasks(startOfDay, endOfDay, username);
+
+        Map<String, Map<String, List<Task>>> taskMap = new HashMap<>();
+
+        for (Task task : allTasks) {
+            String priority = task.getPriority();
+            String state = task.getState();
+
+            // 确保 `kind` 存在
+            taskMap.computeIfAbsent(state, k -> new HashMap<>())
+                    // 确保 `state` 存在
+                    .computeIfAbsent(priority, s -> new ArrayList<>())
+                    // 添加任务到对应的列表
+                    .add(task);
+        }
+        System.out.println("按优先级分组的任务 (" + today + "): " + taskMap);
+        return taskMap;
+    }
 }

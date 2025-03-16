@@ -136,9 +136,9 @@
         <el-input v-model="data.form.content" autocomplete="off" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="隐私" prop="privacy">
-      <el-radio-group v-model="data.form.privacy">
+      <el-radio-group v-model="data.form.permission">
         <el-radio value="公开">公开</el-radio>
-        <el-radio value="仅自己可见">仅自己可见</el-radio>
+        <el-radio value="隐藏">隐藏</el-radio>
       </el-radio-group>
       </el-form-item>
     </el-form>
@@ -195,6 +195,9 @@ import '@wangeditor/editor/dist/css/style.css';
 import {onBeforeUnmount, ref, shallowRef} from "vue";
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import router from "@/router/index.js";
+import '@/assets/view.css'
+import hljs from 'highlight.js';
+import 'highlight.js/styles/default.css'; // 默认样式，或者选择其他主题如 'monokai.css'
 
 const formRef = ref()
 

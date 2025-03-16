@@ -24,11 +24,11 @@ public class BookController {
     private BookService bookService;
 
 
-    @GetMapping("/selectAll")
-    public Result selectAll(Book book) {
-        List<Book> list = bookService.selectAll(book);
-        return Result.success(list);
-    }
+//    @GetMapping("/selectAll")
+//    public Result selectAll(Book book) {
+//        List<Book> list = bookService.selectAll(book);
+//        return Result.success(list);
+//    }
 
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
@@ -40,8 +40,9 @@ public class BookController {
     @GetMapping("/selectPage")
     public Result selectPage(Book book,
                              @RequestParam(defaultValue = "1") Integer pageNum,
-                             @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Book> pageInfo = bookService.selectPage(book, pageNum, pageSize);
+                             @RequestParam(defaultValue = "10") Integer pageSize,
+                             @RequestParam String username) {
+        PageInfo<Book> pageInfo = bookService.selectPage(book, pageNum, pageSize, username);
         return Result.success(pageInfo);
     }
 

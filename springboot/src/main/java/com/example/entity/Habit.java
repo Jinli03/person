@@ -1,14 +1,16 @@
 /**
  * 功能：
  * 作者：Jinli
- * 日期： 2025/3/9 15:20
+ * 日期： 2025/3/15 16:37
  */
 package com.example.entity;
 
+import cn.hutool.core.date.DateTime;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
-public class Task {
+public class Habit {
     private Integer id;
     private String username;
     private String kind;
@@ -18,25 +20,7 @@ public class Task {
     private String tag;
     private LocalDateTime start;
     private LocalDateTime finish;
-    private LocalDateTime warn;
-    private String state;
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", kind='" + kind + '\'' +
-                ", priority='" + priority + '\'' +
-                ", content='" + content + '\'' +
-                ", note='" + note + '\'' +
-                ", tag='" + tag + '\'' +
-                ", start='" + start + '\'' +
-                ", finish='" + finish + '\'' +
-                ", warn='" + warn + '\'' +
-                ", state='" + state + '\'' +
-                '}';
-    }
+    private String warn;
 
     public Integer getId() {
         return id;
@@ -110,19 +94,11 @@ public class Task {
         this.finish = finish;
     }
 
-    public LocalDateTime getWarn() {
+    public String getWarn() {
         return warn;
     }
 
-    public void setWarn(LocalDateTime warn) {
+    public void setWarn(String warn) {
         this.warn = warn;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 }

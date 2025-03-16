@@ -5,6 +5,7 @@
  */
 package com.example.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.example.common.Result;
 import com.example.entity.Task;
 import com.example.service.TaskService;
@@ -25,7 +26,7 @@ public class TaskController {
 
 //    @GetMapping("/selectAll")
 //    public Result selectAll(Task task) {
-//        List<Task> list = taskService.selectAll(task);
+//        List<Task> list = taskService.selectAll();
 //        return Result.success(list);
 //    }
 
@@ -46,12 +47,20 @@ public class TaskController {
 
     @PostMapping("/add")
     public Result add(@RequestBody Task task) {
+        task.setStart(DateUtil.parseLocalDateTime(DateUtil.now()));
         taskService.add(task);
         return Result.success();
     }
 
     @PutMapping("/updateById")
     public Result updateById(@RequestBody Task task) {
+        taskService.updateById(task);
+        return Result.success();
+    }
+
+    @PutMapping("/updateStateById")
+    public Result updateStateById(@RequestBody Task task) {
+        task.setFinish(DateUtil.parseLocalDateTime(DateUtil.now()));
         taskService.updateById(task);
         return Result.success();
     }
@@ -68,9 +77,15 @@ public class TaskController {
         return Result.success();
     }
 
-    @GetMapping("/all")
-    public Result getAllTasks() {
-        Map<String, Map<String, List<Task>>> tasks = taskService.loadTasks();
+    @GetMapping("/getAllById/{username}")
+    public Result getAllTasks(@PathVariable String username) {
+        Map<String, Map<String, List<Task>>> tasks = taskService.loadTasks(username);
+        return Result.success(tasks);
+    }
+
+    @GetMapping("/getPriorityById/{username}")
+    public Result getPriorityTasks(@PathVariable String username) {
+        Map<String, Map<String, List<Task>>> tasks = taskService.loadPriorityTasks(username);
         return Result.success(tasks);
     }
 

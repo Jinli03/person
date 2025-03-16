@@ -1,6 +1,9 @@
 <template>
+  <el-affix :offset="120" style="margin-left: 100px">
+    <el-button type="primary" size="large" :icon="ArrowLeft" circle @click="router.push('/manager/share')"></el-button>
+  </el-affix>
   <div class="article-detail" v-if="data.article.title">
-    <h1>{{ data.article.title }}</h1>
+    <h1>文章标题：{{ data.article.title }}</h1>
     <div class="meta-info">
       <span>发布时间：{{ data.article.time }}</span>
       <span>种类：{{ data.article.kind }}</span>
@@ -8,11 +11,12 @@
     <div class="description">
       <p>{{ data.article.des }}</p>
     </div>
-    <div class="cover-image">
-      <img :src="data.article.cover" alt="文章封面" style="max-width: 100%;" />
-    </div>
-    <div class="content" v-html="data.article.content"></div>
-    <button @click="router.back()">返回</button>
+<!--    <div class="cover-image">-->
+<!--      <img :src="data.article.cover" alt="文章封面" style="max-width: 100%;" />-->
+<!--    </div>-->
+    <el-card style="border-radius: 8px">
+      <div class="editor-content-view" v-html="data.article.content"></div>
+    </el-card>
   </div>
   <div v-else>加载中...</div>
 </template>
@@ -21,6 +25,8 @@
 import { reactive, onMounted } from "vue";
 import request from "@/utils/request.js";
 import {useRoute, useRouter} from "vue-router";
+import '@/assets/view.css'
+import {ArrowLeft} from "@element-plus/icons-vue";
 
 const route = useRoute();
 const router = useRouter();

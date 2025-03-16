@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.HabitMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Habit">
+        select * from habit
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Habit">
+        insert into `habit` (username, kind, priority, content, note, tag, start, finish, warn)
+        values(#{username}, #{kind}, #{priority}, #{content}, #{note},  #{tag}, #{start}, #{finish}, #{warn})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Habit">
+        update `habit` set username = #{username}, kind = #{kind}, priority = #{priority}, content = #{content}, note = #{note}, tag = #{tag}, start = #{start}, finish = #{finish}, warn = #{warn} where id = #{id}
+    </update>
+
+</mapper>

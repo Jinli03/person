@@ -21,8 +21,8 @@
               <el-input v-model="data.user.id" disabled></el-input>
             </el-form-item>
 
-            <el-form-item label="姓名" prop="user.name">
-              <el-input v-model="data.user.name" placeholder="请输入姓名"></el-input>
+            <el-form-item label="昵称" prop="user.name">
+              <el-input v-model="data.user.name" placeholder="请输入昵称"></el-input>
             </el-form-item>
 
             <el-form-item label="用户名" prop="user.username">

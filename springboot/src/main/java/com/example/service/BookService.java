@@ -23,10 +23,10 @@ public class BookService {
     @Resource
     private BookMapper bookMapper;
 
-    public List<Book> selectAll(Book book) {
-        List<Book> list = bookMapper.selectAll(book);
-        return list;
-    }
+//    public List<Book> selectAll(Book book) {
+//        List<Book> list = bookMapper.selectAll(book);
+//        return list;
+//    }
 
     public Book selectById(Integer id) {
         Book book = bookMapper.selectById(id);
@@ -38,9 +38,9 @@ public class BookService {
         return null;
     }
 
-    public PageInfo<Book> selectPage(Book book, Integer pageNum, Integer pageSize) {
+    public PageInfo<Book> selectPage(Book book, Integer pageNum, Integer pageSize, String username) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Book> list = bookMapper.selectAll(book);
+        List<Book> list = bookMapper.selectAll(book, username);
         return PageInfo.of(list);
     }
 

@@ -6,14 +6,11 @@
 
     <select id="selectAll" resultType="com.example.entity.Task">
         select * from task
-        <where>
-            <if test="kind != null">title like concat('%', #{kind}, '%')</if>
-        </where>
     </select>
 
     <insert id="insert" parameterType="com.example.entity.Task">
-        insert into `task` (username, kind, priority, content, note, tag, set, finsih, warn, state)
-        values(#{username}, #{kind}, #{priority}, #{content}, #{note},  #{tag}, #{set}, #{finsih}, #{warn}, #{state})
+        insert into `task` (username, kind, priority, content, note, tag, start, finish, warn, state)
+        values(#{username}, #{kind}, #{priority}, #{content}, #{note},  #{tag}, #{start}, #{finish}, #{warn}, #{state})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.Task">

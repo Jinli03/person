@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BookMapper {
     
-    List<Book> selectAll(Book book);
+    List<Book> selectAll(Book book, String username);
 
     @Select("select * from `book` where title = #{title}")
     Book selectByTitle(Integer id);

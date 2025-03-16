@@ -12,10 +12,22 @@
       <el-row>
         <el-col :span="18">
           <span style="font-size: 30px"> {{ data.book.name }} </span>
+          <span style="font-size: 15px; margin-left: 10px"> {{ data.book.author }} </span>
+          <br>
+          <div style="display: flex; align-items: center; margin-top: 10px;">
+            <img style="width: 20px; margin-right: 8px;" src="@/assets/book/time.png" alt="Books icon">
+            <p style="margin: 0; font-size: 14px;">总阅读时间：</p>
+            <span style="font-size: 16px; margin-left: 5px;">{{ data.book.duration }}小时</span>
+          </div>
+          <div style="display: flex; align-items: center; margin-top: 10px;">
+            <img style="width: 20px; margin-right: 8px;" src="@/assets/book/state.png" alt="Books icon">
+            <p style="margin: 0; font-size: 14px;">状态：</p>
+            <span style="font-size: 16px; margin-left: 5px;">{{ data.book.state }}</span>
+          </div>
           <div style="position: absolute; bottom: 0px; left: 0px; ">
             <el-button type="primary"></el-button>
             <el-button type="success" @click="handleAddNotion">添加笔记</el-button>
-            <el-button type="warning">修改</el-button>
+            <el-button type="warning" @click="handleUpdateBook">修改</el-button>
           </div>
         </el-col>
         <el-col :span="6">
@@ -39,20 +51,47 @@
       </el-card>
     </el-col>
   </el-row>
-  <el-dialog v-model="data.addNotionVisible" title="添加笔记" width="500" destroy-on-close>
-    <el-form :model="data.form" ref="formRef" :rules="data.rules" style="padding: 20px">
+  <el-dialog v-model="data.editFormVisible" title="修改书籍" width="500" destroy-on-close>
+    <el-form ref="formRef" :rules="data.rules" :model="data.bookForm" style="padding: 20px">
       <div style="display: flex; justify-content: center; margin-bottom: 10px">
+        <el-upload
+            class="avatar-uploader"
+            action="http://localhost:9090/files/upload"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+        >
+          <img v-if="data.bookForm.cover" :src="data.bookForm.cover" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        </el-upload>
       </div>
-      <el-form-item label="内容" prop="content">
-        <el-input v-model="data.form.content" autocomplete="off" />
+      <el-form-item label="书名" prop="name">
+        <el-input v-model="data.bookForm.name" autocomplete="off" placeholder="请输入标题"/>
       </el-form-item>
-      <el-form-item label="笔记" prop="think">
-        <el-input v-model="data.form.think" autocomplete="off" />
+      <el-form-item label="作者" prop="author">
+        <el-input v-model="data.bookForm.author" autocomplete="off" placeholder="请输入种类"/>
+      </el-form-item>
+      <el-form-item label="描述" prop="des">
+        <el-input v-model="data.bookForm.des" autocomplete="off" placeholder="请输入描述"/>
+      </el-form-item>
+      <el-form-item label="开始阅读时间" prop="start">
+        <el-date-picker v-model="data.bookForm.start" type="datetime" placeholder="选择开始阅读时间"/>
+      </el-form-item>
+      <el-form-item label="结束阅读时间" prop="end">
+        <el-date-picker v-model="data.bookForm.end" type="datetime" placeholder="选择结束阅读时间"/>
+      </el-form-item>
+      <el-form-item label="总阅读时长" prop="duration">
+        <el-input-number v-model="data.bookForm.duration" :precision="2" :step="1.0" :max="10" placeholder="请输入总阅读时长"/>
+      </el-form-item>
+      <el-form-item label="状态" prop="state">
+        <el-radio-group v-model="data.bookForm.state">
+          <el-radio value="在读">在读</el-radio>
+          <el-radio value="读完">读完</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="隐私">
-        <el-tooltip :content="'Switch value: ' + data.form.permission" placement="top">
+        <el-tooltip :content="'Switch value: ' + data.bookForm.permission" placement="top">
           <el-switch
-              v-model="data.form.permission"
+              v-model="data.bookForm.permission"
               style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
               active-value="公开"
               inactive-value="隐藏"
@@ -62,8 +101,8 @@
     </el-form>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="data.addNotionVisible = false">取消</el-button>
-        <el-button type="primary" @click="addNotion">
+        <el-button @click="data.editBookVisible = false">取消</el-button>
+        <el-button type="primary" @click="updateBook">
           确定
         </el-button>
       </div>
@@ -150,6 +189,7 @@
       </div>
     </template>
   </el-dialog>
+
   <el-dialog v-model="data.updateNotionVisible" title="修改笔记" width="500" destroy-on-close>
     <el-form :model="data.form" label-width="100px">
       <el-row>
@@ -212,9 +252,11 @@ const data = reactive({
   book:{},
   notions: [],
   addNotionVisible: false,
+  editFormVisible: false,
   form: {
     permission: '公开'
   },
+  bookForm: {},
   rules: {
     content: [{ required: true, message: "请输入内容", trigger: "blur" }],
     think: [{ required: true, message: "请输入笔记", trigger: "blur" }],
@@ -254,6 +296,31 @@ const load = () => {
     if (res.code === '200') {
       data.notions = res.data;
       console.log(data.notions);
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+
+const handleUpdateBook = () => {
+  request.get(`book/selectById/${data.bookId}`).then(res => {
+    if (res.code === '200') {
+      data.bookForm = res.data;
+      console.log(data.bookForm);
+      data.editFormVisible = true
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+
+const updateBook = () => {
+  request.put(`book/updateById`, data.bookForm).then(res => {
+    if (res.code === '200') {
+      ElMessage.success('修改成功')
+      console.log(data.bookForm);
+      data.editFormVisible = false
+      load()
     } else {
       ElMessage.error(res.msg)
     }

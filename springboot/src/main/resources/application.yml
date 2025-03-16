@@ -2,6 +2,11 @@ server:
   port: 9090
 
 spring:
+  jpa:
+    hibernate:
+      ddl-auto=update:
+  jackson:
+    time-zone: Asia/Shanghai
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/person?useUnicode=true&characterEncoding=utf-8&useSSL=false
