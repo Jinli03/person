@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.LifeMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Life">
+        select * from life
+        <where>
+            <if test="kind != null">kind like concat('%', #{kind}, '%')</if>
+            and username = #{username}
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Life">
+        insert into `life` (username, title, kind, content, cover)
+        values(#{username}, #{title}, #{kind}, #{content}, #{cover})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Life">
+        update `life` set username = #{username}, title = #{title}, kind = #{kind}, content = #{content}, cover = #{cover} where id = #{id}
+    </update>
+
+</mapper>

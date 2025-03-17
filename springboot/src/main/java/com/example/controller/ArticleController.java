@@ -71,10 +71,10 @@ public class ArticleController {
         return Result.success();
     }
 
-    @GetMapping("/article/countByKind")
-    public Result getArticleCountByKind() {
+    @GetMapping("/article/countByKind/{username}")
+    public Result getArticleCountByKind(@PathVariable String username) {
         try {
-            List<Map<String, Object>> articleCount = articleService.getArticleCountByKind();
+            List<Map<String, Object>> articleCount = articleService.getArticleCountByKind(username);
             return Result.success(articleCount);
         } catch (Exception e) {
             return Result.error("500", "查询失败: " + e.getMessage());

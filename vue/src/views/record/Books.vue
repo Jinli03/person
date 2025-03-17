@@ -21,7 +21,7 @@
           <el-button type="primary" @click="handleAddBook">新增书籍</el-button>
         </el-col>
       </el-row>
-      <el-row :gutter="20" justify="center">
+      <el-row :gutter="20" >
         <el-col :span="6" v-for="item in data.allBooks" :key="item.id" >
           <el-card class="transparent-card" style="height: 150px; cursor: pointer" @click="router.push(`/manager/book/${item.id}`)">
             <div class="card-content">
@@ -51,7 +51,7 @@
         <h2 style="color: black">我的笔记</h2>
         <img style="width: 40px;" src="@/assets/book/books.png" alt="Books icon">
       </el-row>
-      <el-row :gutter="20" justify="center">
+      <el-row :gutter="20">
         <el-col :span="6" v-for="item in data.allNotions" :key="item.id" >
           <el-card class="transparent-card" style="height: 150px; cursor: pointer" @click="">
             <div class="book-title">{{ item.name || '书籍标题' }}</div>

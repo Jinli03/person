@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.PicMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Pic">
+        select * from pic
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Pic">
+        insert into `pic` (article_id, username, des, img, path)
+        values(#{articleId} ,#{username}, #{des}, #{img}, #{path})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Pic">
+        update `pic` set article_id = #{articleId}, username = #{username}, des = #{des}, img = #{img}, path = #{path} where id = #{id}
+    </update>
+
+</mapper>

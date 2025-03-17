@@ -64,8 +64,8 @@ public class ArticleService {
         }
     }
 
-    public List<Map<String, Object>> getArticleCountByKind() {
-        return articleMapper.getArticleCountByKind();
+    public List<Map<String, Object>> getArticleCountByKind(String username) {
+        return articleMapper.getArticleCountByKind(username);
     }
 
     public Integer selectCountByDate(String date) {

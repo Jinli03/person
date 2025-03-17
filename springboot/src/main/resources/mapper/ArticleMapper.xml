@@ -7,7 +7,8 @@
     <select id="selectAll" resultType="com.example.entity.Article">
         select * from article
         <where>
-            <if test="kind != null">title like concat('%', #{kind}, '%')</if>
+            <if test="kind != null">kind like concat('%', #{kind}, '%')</if>
+            and username = #{username}
         </where>
     </select>
 

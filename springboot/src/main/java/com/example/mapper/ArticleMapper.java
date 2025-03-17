@@ -28,8 +28,8 @@ public interface ArticleMapper {
     @Select("select * from `article` where username = #{username}")
     Article selectByUsername(String username);
 
-    @Select("SELECT kind, COUNT(*) AS articlecount FROM article GROUP BY kind")
-    List<Map<String, Object>> getArticleCountByKind();
+    @Select("SELECT kind, COUNT(*) AS articlecount FROM article where username = #{username} GROUP BY kind")
+    List<Map<String, Object>> getArticleCountByKind(String username);
 
     @Select("select count(*) from `article` where time like'%${date}%'")
     Integer selectCountByDate(String date);

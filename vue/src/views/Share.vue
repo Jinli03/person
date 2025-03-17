@@ -21,16 +21,16 @@
       <div>
 <!--        <h1>文章种类</h1>-->
         <div v-if="data.kinds.length">
-          <el-button
-              v-for="(item, index) in data.kinds"
-              :key="index"
-              @click="load(item.kind)"
-              :type="getButtonType(item.kind)"
-              class="category-button"
-          >
-            {{ item.kind }} ({{ item.articlecount }}篇)
-          </el-button>
-        </div>
+        <el-button
+            v-for="(item, index) in data.kinds"
+            :key="index"
+            @click="load(item.kind)"
+            :type="getButtonType(item.kind)"
+            class="category-button"
+        >
+          {{ item.kind }} ({{ item.articlecount }}篇)
+        </el-button>
+      </div>
         <div v-else>
           <p>没有数据可显示。</p>
         </div>
@@ -229,6 +229,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
   server: baseUrl + '/files/wang/upload',
   fieldName: 'file'
 }
+
 const handleCreated = (editor) => {
   editorRef.value = editor
 }
@@ -245,13 +246,14 @@ const load = (kind) => {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
       kind: data.kind,
+      username: data.user.username
     }
   }).then(res => {
     console.log(res.data)
     data.tableData = res.data.list
     data.total = res.data.total
   })
-  request.get('/article/article/countByKind', {}).then(res => {
+  request.get('/article/article/countByKind/' + data.user.username).then(res => {
     data.kinds = res.data
     console.log(data.kinds)
   })
