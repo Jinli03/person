@@ -4,6 +4,9 @@
 *@date 2025/3/16 22:45
 -->
 <template>
+  <el-affix :offset="120" style="margin-left: 100px">
+    <el-button type="primary" size="large" :icon="Plus" circle @click="handleAdd"></el-button>
+  </el-affix>
   <div style="margin: 0 auto; margin-bottom: 30px; width: 60%;">
     <el-card class="transparent-card">
       <div class="text-container">
@@ -28,26 +31,23 @@
     </div>
     <el-row :gutter="20" >
       <el-col :span="6" v-for="item in data.allLifes" :key="item.id" style="margin-top: 10px">
-        <el-card class="transparent-card" style="height: 170px; cursor: pointer; position: relative;">
+        <el-card class="transparent-card" style="height: 220px; cursor: pointer; position: relative;">
           <div class="card-content">
             <img :src="item.cover || defaultImage" class="life-image" alt="Book cover">
             <div class="life-info">
               <div class="life-title">{{ item.title || '未知标题' }}</div>
               <div class="life-kind">{{ item.kind || '未知种类' }}</div>
             </div>
+            <div style="margin-top: 10px">
+              <el-row >
+                <el-button type="success" :icon="Reading" circle @click="router.push(`/manager/pic/${item.id}`)"/>
+                <el-button type="primary" :icon="Edit" circle @click.stop="handleEdit(item.id)"/>
+                <el-button type="danger" :icon="Delete" circle @click.stop="del(item.id)"/>
+              </el-row>
+            </div>
           </div>
-          <el-row class="button-row" :gutter="10">
-            <el-col :span="8">
-              <el-button type="success" :icon="Reading" circle @click="router.push(`/manager/pic/${item.id}`)"/>
-            </el-col>
-            <el-col :span="8">
-              <el-button type="primary" :icon="Edit" circle @click.stop="handleEdit(item.id)"/>
-            </el-col>
-            <el-col :span="8">
-              <el-button type="danger" :icon="Delete" circle @click.stop="del(item.id)"/>
-            </el-col>
-          </el-row>
         </el-card>
+
       </el-col>
     </el-row>
     <div style="margin-top: 20px">
@@ -142,6 +142,11 @@ const data = reactive({
   },
 })
 
+const handleAdd = () => {
+    data.form = {}
+    data.formVisible = true
+}
+
 const handleEdit = (id) => {
   request.get('/life/selectById/'+ id).then(res => {
     if (res.code === '200') {
@@ -167,6 +172,7 @@ const save = () => {
 
 const add = () => {
   data.formVisible = false
+  data.form.username = data.user.username
   request.post('life/add', data.form).then(res => {
     if (res.code === '200') {
       ElMessage.success('添加成功')
@@ -367,4 +373,42 @@ const getButtonType = (kind) => {
 .text-container {
   animation: fadeIn 1.5s ease-in-out; /* 1.5秒淡入动画 */
 }
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 让图片、文本都居中 */
+  text-align: center;
+  padding-bottom: 40px; /* 给按钮留出空间，避免文本被遮挡 */
+}
+
+.life-image {
+  width: 100%;
+  height: 100px; /* 统一图片高度 */
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.life-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.life-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.life-kind {
+  font-size: 14px;
+  color: #666;
+}
+
+
+
+
+
 </style>

@@ -160,7 +160,7 @@ const updateUser = () => {
   background-image: url("https://haowallpaper.com/link/common/file/previewFileImg/16288183581003136");
   background-size: cover; /* 图片完全覆盖 */
   background-position: center; /* 居中显示 */
-  background-attachment: scroll; /* 背景图片随滚动移动 */
+  background-attachment: fixed; /* 背景图片随滚动移动 */
   height: 100vh; /* 固定高度为视窗高度 */
   transition: opacity 0.5s ease-out; /* 平滑过渡效果 */
 }

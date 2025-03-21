@@ -188,7 +188,7 @@
 
 <script setup>
 import { reactive } from "vue";
-import {Delete, Edit, Plus, Search, Document, Reading} from "@element-plus/icons-vue"
+import {Delete, Edit, Plus, Search, Document, Reading, ArrowLeft} from "@element-plus/icons-vue"
 import request from "@/utils/request.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import '@wangeditor/editor/dist/css/style.css';

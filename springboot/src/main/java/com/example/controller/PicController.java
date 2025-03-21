@@ -78,4 +78,12 @@ public class PicController {
         picService.deleteBatch(ids);
         return Result.success();
     }
+
+    @GetMapping("/selectPageById")
+    public Result selectPageById(Pic pic,
+                             @RequestParam(defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "8") Integer pageSize) {
+        PageInfo<Pic> pageInfo = picService.selectPageById(pic, pageNum, pageSize);
+        return Result.success(pageInfo);
+    }
 }

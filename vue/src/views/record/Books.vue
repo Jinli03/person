@@ -21,9 +21,9 @@
           <el-button type="primary" @click="handleAddBook">新增书籍</el-button>
         </el-col>
       </el-row>
-      <el-row :gutter="20" >
-        <el-col :span="6" v-for="item in data.allBooks" :key="item.id" >
-          <el-card class="transparent-card" style="height: 150px; cursor: pointer" @click="router.push(`/manager/book/${item.id}`)">
+      <el-row :gutter="20" justify="start">
+        <el-col :span="6" v-for="item in data.allBooks" :key="item.id" style="margin-top: 10px">
+          <el-card class="book-card" @click="router.push(`/manager/book/${item.id}`)">
             <div class="card-content">
               <img :src="item.cover || defaultImage" class="book-image" alt="Book cover">
               <div class="book-info">
@@ -34,6 +34,7 @@
           </el-card>
         </el-col>
       </el-row>
+
       <div style="margin-top: 20px">
       </div>
       <el-card>
@@ -52,11 +53,26 @@
         <img style="width: 40px;" src="@/assets/book/books.png" alt="Books icon">
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="6" v-for="item in data.allNotions" :key="item.id" >
-          <el-card class="transparent-card" style="height: 150px; cursor: pointer" @click="">
-            <div class="book-title">{{ item.name || '书籍标题' }}</div>
-            <div class="book-author">{{ item.think || '未知作者' }}</div>
+        <el-col :span="6" v-for="item in data.allNotions" :key="item.id" style="margin-top: 10px">
+          <el-card class="notion-card" @click="">
+            <div class="notion-content">
+              <!-- 书名 -->
+              <div class="notion-title">{{ item.name || '未命名笔记' }}</div>
+
+              <!-- 书本原内容 -->
+              <div class="notion-text">{{ item.content || '暂无内容' }}</div>
+
+              <!-- 书籍思考 -->
+              <div class="notion-think">{{ item.think || '暂无思考' }}</div>
+
+              <!-- 时间 & 隐私信息 -->
+              <div class="notion-footer">
+                <span class="notion-time">{{ item.time }}</span>
+                <span class="notion-privacy">{{ item.permission ? '🔒 私密' : '🌍 公开' }}</span>
+              </div>
+            </div>
           </el-card>
+
         </el-col>
       </el-row>
       <div style="margin-top: 20px">
@@ -296,33 +312,91 @@ load()
   transition: transform 0.6s ease-in-out, filter 0.3s ease-in-out;
 }
 
-/* 卡片内部布局 */
+.book-card {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
 .card-content {
   display: flex;
   align-items: center;
+  gap: 10px; /* 书籍封面和文字之间的间距 */
 }
 
 .book-image {
-  width: 50%; /* 图片占卡片宽度的50% */
-  height: auto;
-  object-fit: cover; /* 保持图片比例 */
-  margin-right: 10px; /* 与右边文字的间距 */
+  width: 80px; /* 统一封面大小 */
+  height: 120px; /* 统一封面高度 */
+  object-fit: cover; /* 保证封面填充不变形 */
+  border-radius: 5px;
 }
 
 .book-info {
-  width: 50%; /* 文字区域占50% */
-  display: flex;
-  flex-direction: column;
+  flex: 1; /* 让文字内容自适应 */
 }
 
 .book-title {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .book-author {
   font-size: 14px;
   color: #666;
 }
+
+.notion-card {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  padding: 10px; /* 减少内部空白 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 140px; /* 控制整体高度 */
+}
+
+.notion-card:hover {
+  transform: scale(1.02);
+}
+
+.notion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* 适当减少间距，使内容更紧凑 */
+  height: 100%;
+}
+
+.notion-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.notion-text,
+.notion-think {
+  font-size: 12px;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 限制最多显示两行 */
+  -webkit-box-orient: vertical;
+}
+
+.notion-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #999;
+  margin-top: auto; /* 让 footer 贴到底部 */
+}
+
+
 </style>

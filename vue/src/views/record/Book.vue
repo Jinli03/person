@@ -8,33 +8,43 @@
     <el-button type="primary" size="large" :icon="ArrowLeft" circle @click="router.push('/manager/books')"></el-button>
   </el-affix>
   <div style="width: 100%; display: flex; justify-content: center; align-items: center">
-    <el-card style="width: 70%; height: 200px; position: relative;" class="transparent-card">
-      <el-row>
-        <el-col :span="18">
-          <span style="font-size: 30px"> {{ data.book.name }} </span>
-          <span style="font-size: 15px; margin-left: 10px"> {{ data.book.author }} </span>
-          <br>
-          <div style="display: flex; align-items: center; margin-top: 10px;">
-            <img style="width: 20px; margin-right: 8px;" src="@/assets/book/time.png" alt="Books icon">
-            <p style="margin: 0; font-size: 14px;">总阅读时间：</p>
-            <span style="font-size: 16px; margin-left: 5px;">{{ data.book.duration }}小时</span>
+    <el-card style="width: 70%; height: 200px; position: relative; padding: 20px;" class="transparent-card">
+      <el-row style="display: flex; align-items: stretch;">
+        <!-- 文字部分 -->
+        <el-col :span="18" style="display: flex; flex-direction: column;">
+          <div>
+            <span style="font-size: 30px; font-weight: bold;">{{ data.book.name }}</span>
+            <span style="font-size: 15px; margin-left: 10px; color: #666;">{{ data.book.author }}</span>
           </div>
-          <div style="display: flex; align-items: center; margin-top: 10px;">
-            <img style="width: 20px; margin-right: 8px;" src="@/assets/book/state.png" alt="Books icon">
-            <p style="margin: 0; font-size: 14px;">状态：</p>
-            <span style="font-size: 16px; margin-left: 5px;">{{ data.book.state }}</span>
+
+          <!-- 书籍信息 -->
+          <div class="info-item">
+            <img class="info-icon" src="@/assets/book/time.png" alt="Time icon">
+            <p class="info-label">总阅读时间：</p>
+            <span class="info-value">{{ data.book.duration }} 小时</span>
           </div>
-          <div style="position: absolute; bottom: 0px; left: 0px; ">
+
+          <div class="info-item">
+            <img class="info-icon" src="@/assets/book/state.png" alt="State icon">
+            <p class="info-label">状态：</p>
+            <span class="info-value">{{ data.book.state }}</span>
+          </div>
+
+          <!-- 按钮固定在底部 -->
+          <div class="button-group">
             <el-button type="primary"></el-button>
             <el-button type="success" @click="handleAddNotion">添加笔记</el-button>
             <el-button type="warning" @click="handleUpdateBook">修改</el-button>
           </div>
         </el-col>
-        <el-col :span="6">
+
+        <!-- 书籍封面 -->
+        <el-col :span="6" style="display: flex; justify-content: center; align-items: center;">
           <img :src="data.book.cover || defaultImage" class="book-image" alt="Book cover">
         </el-col>
       </el-row>
     </el-card>
+
   </div>
   <el-row :gutter="20">
     <el-col :span="6" v-for="item in data.notions" :key="item.id" >
@@ -458,4 +468,53 @@ const delNotion = (id) => {
   display: flex;
   gap: 10px; /* 按钮之间的间距 */
 }
+
+.image-container {
+  width: 100%;
+  height: 180px; /* 设定固定高度，防止过高 */
+  background-size: cover; /* 保持宽高比填充 */
+  background-position: center; /* 居中显示 */
+  border-radius: 8px; /* 圆角优化 */
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.info-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+.info-label {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.info-value {
+  font-size: 16px;
+  margin-left: 5px;
+  color: #333;
+}
+
+/* 统一封面图片大小，防止变形 */
+.book-image {
+  width: 120px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 让按钮始终在底部 */
+.button-group {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}
+
 </style>

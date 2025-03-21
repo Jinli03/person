@@ -34,11 +34,9 @@ public class FileController {
     @PostMapping("/upload")
     public Result upload(MultipartFile file) {
         String originFilename = file.getOriginalFilename(); //xxx.png
-        System.out.println("1");
         if (!FileUtil.isDirectory(filePath)) {//当前文件父级目录不存在，则创建目录
             FileUtil.mkdir(filePath);
         }
-        System.out.println("1");
         String fileName = System.currentTimeMillis() + "_" + originFilename;
         String realPath = filePath + fileName;
         try {

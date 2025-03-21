@@ -68,4 +68,10 @@ public class PicService {
             this.deleteById(id);
         }
     }
+
+    public PageInfo<Pic> selectPageById(Pic pic, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Pic> list = picMapper.selectByArticleId(pic);
+        return PageInfo.of(list);
+    }
 }

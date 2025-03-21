@@ -28,4 +28,7 @@ public interface PicMapper {
 
     @Select("select * from `pic` where username = #{username}")
     List<Pic> selectByUsername(String username);
+
+    @Select("select * from `pic` where article_id = #{articleId}")
+    List<Pic> selectByArticleId(Pic pic);
 }
