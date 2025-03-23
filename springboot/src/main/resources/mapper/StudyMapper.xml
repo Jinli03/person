@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.StudyMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Study">
+        select * from study
+        <where>
+            <if test="name != null">name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Study">
+        insert into `study` (username, date, start, end, task, duration, note, status, completion)
+        values(#{username}, #{date}, #{start}, #{end}, #{task}, #{duration}, #{note}, #{status}, #{completion})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Study">
+        update `study` set username = #{username}, date = #{date}, start =#{start}, end = #{end}, task = #{task}, duration = #{duration}, note = #{note}, status = #{status}, completion = #{completion} where id = #{id}
+    </update>
+
+</mapper>
