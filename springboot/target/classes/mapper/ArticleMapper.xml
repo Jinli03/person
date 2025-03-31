@@ -11,14 +11,22 @@
             and username = #{username}
         </where>
     </select>
+    <select id="selectByState" resultType="com.example.entity.Article">
+        select * from article
+        <where>
+            <if test="state != null and state != ''">
+                AND state = #{state}
+            </if>
+        </where>
+    </select>
 
     <insert id="insert" parameterType="com.example.entity.Article">
-        insert into `article` (username, kind, title, des, cover, content, list, time, permission)
-        values(#{username}, #{kind}, #{title}, #{des}, #{cover}, #{content}, #{list}, #{time}, #{permission})
+        insert into `article` (username, kind, title, des, cover, content, list, time, permission, state)
+        values(#{username}, #{kind}, #{title}, #{des}, #{cover}, #{content}, #{list}, #{time}, #{permission}, #{state})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.Article">
-        update `article` set username = #{username}, kind = #{kind}, title = #{title}, des = #{des}, cover = #{cover}, content = #{content}, list = #{list}, time = #{time}, permission = #{permission} where id = #{id}
+        update `article` set username = #{username}, kind = #{kind}, title = #{title}, des = #{des}, cover = #{cover}, content = #{content}, list = #{list}, time = #{time}, permission = #{permission}, state = #{state} where id = #{id}
     </update>
 
 </mapper>

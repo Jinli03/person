@@ -130,4 +130,12 @@ public class ArticleController {
         }
         return Result.success(list);
     }
+
+    @GetMapping("/selectByState")
+    public Result selectByState(Article article,
+                             @RequestParam(defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageInfo<Article> pageInfo = articleService.selectByState(article, pageNum, pageSize);
+        return Result.success(pageInfo);
+    }
 }

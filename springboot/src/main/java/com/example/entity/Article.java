@@ -16,6 +16,7 @@ public class Article {
     private String list;
     private String time;
     private String permission;
+    private String state;
 
     public Integer getId() {
         return id;
@@ -95,5 +96,13 @@ public class Article {
 
     public void setPermission(String permission) {
         this.permission = permission;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

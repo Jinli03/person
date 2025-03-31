@@ -33,4 +33,6 @@ public interface ArticleMapper {
 
     @Select("select count(*) from `article` where time like'%${date}%'")
     Integer selectCountByDate(String date);
+
+    List<Article> selectByState(Article article);
 }

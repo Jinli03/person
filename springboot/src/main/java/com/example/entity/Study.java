@@ -13,13 +13,13 @@ public class Study {
     private int id;
     private String username;
     private LocalDate date;
-    private LocalTime start;
-    private LocalTime end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private String task;
     private float duration;
     private String note;
     private String status;
-    private String completion;
+    private Float completion;
 
 
     public int getId() {
@@ -46,20 +46,20 @@ public class Study {
         this.date = date;
     }
 
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalTime start) {
-        this.start = start;
-    }
-
-    public LocalTime getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(LocalTime end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
+    }
+
+    public LocalDateTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDateTime start) {
+        this.start = start;
     }
 
     public String getTask() {
@@ -94,11 +94,11 @@ public class Study {
         this.status = status;
     }
 
-    public String getCompletion() {
+    public Float getCompletion() {
         return completion;
     }
 
-    public void setCompletion(String completion) {
+    public void setCompletion(Float completion) {
         this.completion = completion;
     }
 }

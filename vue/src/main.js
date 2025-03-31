@@ -9,6 +9,8 @@ import naive from 'naive-ui'
 import '@/assets/global.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus' // 引入 ElNotification
+import VCalendar from 'v-calendar';
+import 'v-calendar/style.css';
 
 const app = createApp(App)
 
@@ -83,7 +85,7 @@ app.use(ElementPlus, {
     locale: zhCn,
 })
 app.use(reminderPlugin) // 添加提醒插件
-
+app.use(VCalendar, {})
 // 注册 Element Plus 图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

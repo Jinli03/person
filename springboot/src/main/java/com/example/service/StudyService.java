@@ -12,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -57,5 +58,24 @@ public class StudyService {
         for (Integer id : ids) {
             this.deleteById(id);
         }
+    }
+
+    public List<Study> selectDataByDate(String username, LocalDate date) {
+        List<Study> list = studyMapper.selectDataByDate(username, date);
+        return list;
+    }
+
+    public List<Study> selectLongByDate(String username, LocalDate date) {
+        List<Study> list = studyMapper.selectLongByDate(username, date);
+        return list;
+    }
+
+    public List<Study> selectSortByDate(String username, LocalDate date) {
+        List<Study> list = studyMapper.selectSortByDate(username, date);
+        return list;
+    }
+
+    public List<Study> selectByDateRange(String username, LocalDate startDate, LocalDate endDate) {
+        return studyMapper.selectByDateRange(username, startDate, endDate);
     }
 }

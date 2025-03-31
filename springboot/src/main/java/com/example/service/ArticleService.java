@@ -71,4 +71,10 @@ public class ArticleService {
     public Integer selectCountByDate(String date) {
         return articleMapper.selectCountByDate(date);
     }
+
+    public PageInfo<Article> selectByState(Article article, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Article> list = articleMapper.selectByState(article);
+        return PageInfo.of(list);
+    }
 }

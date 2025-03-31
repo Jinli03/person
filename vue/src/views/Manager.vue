@@ -38,7 +38,7 @@
               </template>
               <template #default>
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">健康</el-button>
-                <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">学习时长</el-button>
+                <el-button @click="router.push('/manager/study')" style="width: 120px; height: 40px">学习时长</el-button>
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">打卡记录</el-button>
                 <el-button @click="router.push('/manager/books')" style="width: 120px; height: 40px">阅读记录</el-button>
                 <el-button @click="router.push('/manager/book')" style="width: 120px; height: 40px">勋章墙</el-button>
@@ -102,7 +102,9 @@
             <template #default>
               <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">登录</el-button>
               <el-button @click="router.push('/manager/person/all')" style="width: 120px; height: 40px">个人信息</el-button>
-              <el-button @click="router.push('/manager/admin')" style="width: 120px; height: 40px">管理员信息</el-button>
+              <div v-if="data.user.role === '管理员'">
+                <el-button @click="router.push('/manager/audit')" style="width: 120px; height: 40px">审核</el-button>
+              </div>
               <el-button @click="logout" style="width: 120px; height: 40px">退出</el-button>
             </template>
           </el-popover>
