@@ -1,12 +1,19 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="12">
-      <div style="margin-top: 120px; margin-left: 200px">
+      <div style="margin-top: 30px; margin-left: 200px">
         <h1 style="font-size: 50px; color: white">
-          Hi! 👋 <br />
-          I'm Jinli03 <br />
-          A Web Developer
+          Hi!  {{ data.user.name}} 👋<br />
         </h1>
+      </div>
+    </el-col>
+    <el-col :span="12">
+      <div style="margin-top: 150px; margin-left: 300px">
+        <div class="block">
+          <el-avatar :size="200" :src="data.user.avatar" />
+        </div>
+      </div>
+      <div style="margin-left: 185px; margin-top: 50px">
         <div style="display: flex">
           <div>
             <el-card class="transparent-card">
@@ -28,13 +35,6 @@
               <img style="width:30px; " src="@/assets/netcloud.png">
             </el-card>
           </div>
-        </div>
-      </div>
-    </el-col>
-    <el-col :span="12">
-      <div style="margin-top: 150px; margin-left: 300px">
-        <div class="block">
-          <el-avatar :size="200" :src="data.user.avatar" />
         </div>
       </div>
     </el-col>

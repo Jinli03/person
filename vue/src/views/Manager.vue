@@ -56,9 +56,17 @@
                 <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">随笔</el-button>
               </template>
             </el-popover>
-            <el-card style="background-color: transparent; border: none" class="hover-card">
-              <span style="font-size: 20px; ">社交</span>
-            </el-card>
+            <el-popover popper-style="background-color: transparent; border: none">
+              <template #reference>
+                <el-card style="background-color: transparent; border: none" class="hover-card">
+                  <span style="font-size: 20px; ">社交</span>
+                </el-card>
+              </template>
+              <template #default>
+                <el-button @click="router.push('/manager/share')" style="width: 120px; height: 40px">好友列表</el-button>
+                <el-button @click="router.push('/manager/life')" style="width: 120px; height: 40px">好友动态</el-button>
+              </template>
+            </el-popover>
           </div>
 <!--          <el-menu mode="horizontal" router :default-active="router().currentRoute.value.path" style="border: 0" class="transparent-card">-->
 <!--            <el-menu-item style="border-radius: 10px" index="/manager/homePage">主页</el-menu-item>-->

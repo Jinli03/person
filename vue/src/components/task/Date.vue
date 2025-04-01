@@ -4,21 +4,42 @@
 *@date 2025/3/9 15:49
 -->
 <template>
-  <el-card class="task-card">
-    <div v-for="(task, index) in tasks" :key="index" class="task-item">
-      <el-checkbox v-model="task.completed">{{ task.name }}</el-checkbox>
-    </div>
-  </el-card>
+  <el-row :gutter="20">
+    <el-col :span="5">
+      <el-card class="transparent-card">
+        <VDatePicker v-model="date" mode="date" @update:model-value="fetchDataByDate"/>
+      </el-card>
+    </el-col>
+    <el-col :span="18">
+
+    </el-col>
+  </el-row>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {ref, reactive} from "vue";
+import request from "@/utils/request.js";
 
-const tasks = ref([
-  { name: "晨跑", completed: true },
-  { name: "阅读30分钟", completed: false },
-  { name: "学习Vue.js", completed: false },
+const date = ref(new Date())
+
+const data = reactive([
+
 ]);
+
+const fetchDataByDate = () => {
+  const formattedDate = date.value.toISOString().split("T")[0];
+  request.get('/study/selectDataByDate', {
+    params: {
+      username: data.user.username,
+      date: formattedDate
+    }
+  }).then(res => {
+    console.log(res.data)
+    data.tableData = res.data
+  })
+  load()
+}
+
 </script>
 
 <style>

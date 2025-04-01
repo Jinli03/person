@@ -26,9 +26,7 @@
       <el-table-column label="操作" align="center">
         <template #default="scope">
           <div style="display: flex; justify-content: center; gap: 10px;">
-            <el-button type="primary" :icon="Edit" circle @click="editContent(scope.row)"></el-button>
-            <el-button type="primary" :icon="Edit" circle @click="handleEdit(scope.row)"></el-button>
-            <el-button type="danger" :icon="Delete" circle @click="del(scope.row.id)"></el-button>
+            <el-button type="primary" @click.stop="router.push(`/manager/article/${scope.row.id}`)">查看详情</el-button>
           </div>
         </template>
       </el-table-column>

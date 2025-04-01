@@ -47,10 +47,16 @@
               </div>
               <span style="font-size: 10px; margin-left: 5px">发布时间：{{ item.time }}</span>
             </div>
+            <div style="display: flex; align-items: center; margin-bottom: 5px">
+              <div>
+                <img style="width:10px;" src="@/assets/share/state.png">
+              </div>
+              <span style="font-size: 10px; margin-left: 5px">当前状态：{{ item.state }}</span>
+            </div>
             <div style="margin-bottom: 5px">
               <span style="font-size: 20px; font-weight: bold">{{ item.title }}</span>
             </div>
-            <div style="margin-bottom: 5px; height: 160px">
+            <div style="margin-bottom: 5px; height: 135px">
               <span style="font-size: 20px">{{ item.des }}</span>
             </div>
             <div style="display: flex; align-items: center; margin-bottom: 5px">
