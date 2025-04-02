@@ -20,6 +20,14 @@
         </where>
     </select>
 
+    <select id="selectPyqPage" resultType="com.example.entity.Article">
+        select * from article where state = #{state} and permission = #{permission} and username != #{username} order by time desc
+    </select>
+
+    <select id="selectFriendsPage" resultType="com.example.entity.Article">
+        select * from article where state = #{state} and permission = #{permission} and username != #{username} and username in (select friend from friend where username = #{username} and state = '好友') order by time desc
+    </select>
+
     <insert id="insert" parameterType="com.example.entity.Article">
         insert into `article` (username, kind, title, des, cover, content, list, time, permission, state)
         values(#{username}, #{kind}, #{title}, #{des}, #{cover}, #{content}, #{list}, #{time}, #{permission}, #{state})

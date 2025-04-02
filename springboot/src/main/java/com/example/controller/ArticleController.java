@@ -138,4 +138,20 @@ public class ArticleController {
         PageInfo<Article> pageInfo = articleService.selectByState(article, pageNum, pageSize);
         return Result.success(pageInfo);
     }
+
+    @GetMapping("/selectPyqPage")
+    public Result selectPyqPage(Article article,
+                             @RequestParam(defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageInfo<Article> pageInfo = articleService.selectPyqPage(article, pageNum, pageSize);
+        return Result.success(pageInfo);
+    }
+
+    @GetMapping("/selectFriendsPage")
+    public Result selectFriendsPage(Article article,
+                                @RequestParam(defaultValue = "1") Integer pageNum,
+                                @RequestParam(defaultValue = "10") Integer pageSize) {
+        PageInfo<Article> pageInfo = articleService.selectFriendsPage(article, pageNum, pageSize);
+        return Result.success(pageInfo);
+    }
 }

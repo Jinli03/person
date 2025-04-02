@@ -35,4 +35,8 @@ public interface ArticleMapper {
     Integer selectCountByDate(String date);
 
     List<Article> selectByState(Article article);
+
+    List<Article> selectPyqPage(Article article);
+
+    List<Article> selectFriendsPage(Article article);
 }

@@ -63,8 +63,8 @@
                 </el-card>
               </template>
               <template #default>
-                <el-button @click="router.push('/manager/share')" style="width: 120px; height: 40px">好友列表</el-button>
-                <el-button @click="router.push('/manager/life')" style="width: 120px; height: 40px">好友动态</el-button>
+                <el-button @click="router.push('/manager/friends')" style="width: 120px; height: 40px">好友列表</el-button>
+                <el-button @click="router.push('/manager/pyq')" style="width: 120px; height: 40px">好友动态</el-button>
               </template>
             </el-popover>
           </div>

@@ -77,4 +77,16 @@ public class ArticleService {
         List<Article> list = articleMapper.selectByState(article);
         return PageInfo.of(list);
     }
+
+    public PageInfo<Article> selectPyqPage(Article article, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Article> list = articleMapper.selectPyqPage(article);
+        return PageInfo.of(list);
+    }
+
+    public PageInfo<Article> selectFriendsPage(Article article, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Article> list = articleMapper.selectFriendsPage(article);
+        return PageInfo.of(list);
+    }
 }

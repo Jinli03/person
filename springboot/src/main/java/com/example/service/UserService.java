@@ -34,6 +34,11 @@ public class UserService {
         return user;
     }
 
+    public User selectByUsername(String username) {
+        User user = userMapper.selectByUsername(username);
+        return user;
+    }
+
     public List<User> selectList(User user) {
         System.out.println(user);
         return null;

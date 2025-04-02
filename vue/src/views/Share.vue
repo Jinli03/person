@@ -295,6 +295,8 @@ const save = () => {
 }
 
 const add = () => {
+  data.form.username = data.user.username
+  data.form.state = '未审核'
   data.formVisible = false
   request.post('article/add', data.form).then(res => {
     if (res.code === '200') {
