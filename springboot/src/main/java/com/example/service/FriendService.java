@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -80,15 +81,15 @@ public class FriendService {
         return record != null && "好友".equals(record.getState());
     }
 
-    public void addFriend(String username, String friend, String state) {
+    public void addFriend(String username, String friend, String uavatar, String state) {
         User user = userMapper.selectByUsername(friend);
-        String avatar = user.getAvatar();
+        String favatar = user.getAvatar();
         LocalDateTime invite = LocalDateTime.now();
-        friendMapper.addFriend(username, friend, avatar, state, invite);
+        friendMapper.addFriend(username, friend, uavatar, favatar, state, invite);
     }
 
-    public List<Friend> selectInviteFriend(String username) {
-        List<Friend> list = friendMapper.selectInviteFriend(username);
+    public List<Friend> selectInviteFriend(String friend) {
+        List<Friend> list = friendMapper.selectInviteFriend(friend);
         return list;
     }
 

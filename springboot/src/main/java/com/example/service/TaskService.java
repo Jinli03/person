@@ -6,6 +6,7 @@
 package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
+import com.example.entity.Study;
 import com.example.entity.Task;
 import com.example.mapper.TaskMapper;
 import com.github.pagehelper.PageHelper;
@@ -117,5 +118,10 @@ public class TaskService {
         }
         System.out.println("按优先级分组的任务 (" + today + "): " + taskMap);
         return taskMap;
+    }
+
+    public List<Study> selectDataByDate(String username, LocalDate date) {
+        List<Study> list = taskMapper.selectDataByDate(username, date);
+        return list;
     }
 }

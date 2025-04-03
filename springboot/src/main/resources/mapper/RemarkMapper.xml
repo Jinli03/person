@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.RemarkMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Remark">
+        select * from remark
+        <where>
+            <if test="name != null">name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Remark">
+        insert into `remark` (article_id, username, avatar, content, time)
+        values(#{articleId}, #{username}, #{avatar}, #{content}, #{time})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Remark">
+        update `remark` set article_id = #{articleId}, username = #{username}, avatar = #{avatar}, content =#{content}, time = #{time} where id = #{id}
+    </update>
+
+</mapper>

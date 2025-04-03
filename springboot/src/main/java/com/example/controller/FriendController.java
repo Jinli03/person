@@ -86,14 +86,14 @@ public class FriendController {
     }
 
     @PostMapping("/addFriend")
-    public Result addFriend(@RequestParam String username, @RequestParam String friend, @RequestParam String state) {
-        friendService.addFriend(username, friend, state);
+    public Result addFriend(@RequestParam String username, @RequestParam String friend, @RequestParam String uavatar, @RequestParam String state) {
+        friendService.addFriend(username, friend, uavatar, state);
         return Result.success();
     }
 
     @GetMapping("/selectInviteFriend")
-    public Result seleteInviteFriend(@RequestParam String username) {
-        List<Friend> list = friendService.selectInviteFriend(username);
+    public Result seleteInviteFriend(@RequestParam String friend) {
+        List<Friend> list = friendService.selectInviteFriend(friend);
         return Result.success(list);
     }
 
@@ -114,4 +114,5 @@ public class FriendController {
         friendService.updateByName(username, friend, state);
         return Result.success();
     }
+
 }

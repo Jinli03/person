@@ -35,11 +35,11 @@ public interface FriendMapper {
     @Select("select * from `friend` where username = #{username} and friend = #{friend} AND state = '好友'")
     Friend findFriendship( String username, String friend);
 
-    @Insert("insert into `friend` (username, friend, avatar, state, invite) values (#{username}, #{friend}, #{avatar}, #{state}, #{invite})")
-    void addFriend(String username, String friend, String avatar, String state, LocalDateTime invite);
+    @Insert("insert into `friend` (username, friend, uavatar, favatar, state, invite) values (#{username}, #{friend}, #{uavatar}, #{favatar}, #{state}, #{invite})")
+    void addFriend(String username, String friend, String uavatar, String favatar, String state, LocalDateTime invite);
 
-    @Select("select * from `friend` where username = #{username} and state = '待审核'")
-    List<Friend> selectInviteFriend(String username);
+    @Select("select * from `friend` where friend = #{friend} and state = '待审核'")
+    List<Friend> selectInviteFriend(String friend);
 
     @Select("select * from `friend` where username = #{username} and state = '好友'")
     List<Friend> selectFriend(String username);

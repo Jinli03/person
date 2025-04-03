@@ -22,13 +22,13 @@ import request from "@/utils/request.js";
 
 const date = ref(new Date())
 
-const data = reactive([
-
-]);
+const data = reactive({
+  user: JSON.parse(localStorage.getItem('pilot'))
+})
 
 const fetchDataByDate = () => {
   const formattedDate = date.value.toISOString().split("T")[0];
-  request.get('/study/selectDataByDate', {
+  request.get('/task/selectDataByDate', {
     params: {
       username: data.user.username,
       date: formattedDate
@@ -38,6 +38,10 @@ const fetchDataByDate = () => {
     data.tableData = res.data
   })
   load()
+}
+
+const load = () => {
+
 }
 
 </script>

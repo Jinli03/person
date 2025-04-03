@@ -1,9 +1,11 @@
 package com.example.mapper;
 
+import com.example.entity.Study;
 import com.example.entity.Task;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,4 +31,7 @@ public interface TaskMapper {
 
     @Select("SELECT * FROM `task` WHERE `start` BETWEEN #{start} AND #{end} AND username = #{username}")
     List<Task> findAllTasks(LocalDateTime start, LocalDateTime end, String username);
+
+    @Select("select * from `task` where username = #{username} and DATE(start) = #{date}")
+    List<Study> selectDataByDate(String username, LocalDate date);
 }

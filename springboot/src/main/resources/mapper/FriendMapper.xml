@@ -13,12 +13,12 @@
     </select>
 
     <insert id="insert" parameterType="com.example.entity.Friend">
-        insert into `friend` (username, friend, state, invite, time)
-        values(#{username}, #{friend}, #{avatar}, #{state}, #{invite}, #{time})
+        insert into `friend` (username, friend, uavater, favater, state, invite, time)
+        values(#{username}, #{friend}, #{uavatar}, #{favatar}, #{state}, #{invite}, #{time})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.Friend">
-        update `friend` set username = #{username}, friend = #{friend}, avatar = #{avatar}, state = #{state}, invite = #{invite}, time = #{time} where id = #{id}
+        update `friend` set username = #{username}, friend = #{friend}, uavatar = #{uavatar}, favatar = #{favatar}, state = #{state}, invite = #{invite}, time = #{time} where id = #{id}
     </update>
 
 </mapper>

@@ -1,21 +1,19 @@
 /**
  * 功能：
  * 作者：Jinli
- * 日期： 2025/4/2 10:38
+ * 日期： 2025/4/3 12:13
  */
 package com.example.entity;
 
 import java.time.LocalDateTime;
 
-public class Friend {
+public class Comment {
     private Integer id;
     private String username;
     private String friend;
-    private String state;
-    private String uavatar;
-    private String favatar;
-    private LocalDateTime invite;
+    private String comment;
     private LocalDateTime time;
+    private String avatar;
 
     public Integer getId() {
         return id;
@@ -41,36 +39,12 @@ public class Friend {
         this.friend = friend;
     }
 
-    public String getState() {
-        return state;
+    public String getComment() {
+        return comment;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getUavatar() {
-        return uavatar;
-    }
-
-    public void setUavatar(String uavatar) {
-        this.uavatar = uavatar;
-    }
-
-    public String getFavatar() {
-        return favatar;
-    }
-
-    public void setFavatar(String favatar) {
-        this.favatar = favatar;
-    }
-
-    public LocalDateTime getInvite() {
-        return invite;
-    }
-
-    public void setInvite(LocalDateTime invite) {
-        this.invite = invite;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public LocalDateTime getTime() {
@@ -79,5 +53,13 @@ public class Friend {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

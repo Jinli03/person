@@ -7,12 +7,14 @@ package com.example.controller;
 
 import cn.hutool.core.date.DateUtil;
 import com.example.common.Result;
+import com.example.entity.Study;
 import com.example.entity.Task;
 import com.example.service.TaskService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +89,14 @@ public class TaskController {
     public Result getPriorityTasks(@PathVariable String username) {
         Map<String, Map<String, List<Task>>> tasks = taskService.loadPriorityTasks(username);
         return Result.success(tasks);
+    }
+
+    @GetMapping("/selectDataByDate")
+    public Result selectDataByDate(Task task,
+                                   @RequestParam String  username,
+                                   @RequestParam LocalDate date) {
+        List<Study> list = taskService.selectDataByDate(username, date);
+        return Result.success(list);
     }
 
 }
