@@ -409,6 +409,16 @@ const data = reactive({
       {required: true, message: '请选择时间', trigger: 'blur'}
     ],
   },
+  state: [
+    {
+      value: '未完成',
+      label: '未完成',
+    },
+    {
+      value: '已完成',
+      label: '已完成',
+    }
+  ]
 });
 
 const getColor = (kind) => {

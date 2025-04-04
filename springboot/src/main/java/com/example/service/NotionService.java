@@ -71,4 +71,8 @@ public class NotionService {
         List<Notion> list = notionMapper.allNotions(id);
         return list;
     }
+
+    public int getNotionCountByUsername(String username) {
+        return notionMapper.getNotionCountByUsername(username);
+    }
 }

@@ -115,4 +115,8 @@ public class FriendController {
         return Result.success();
     }
 
+    @GetMapping("/getFriendCount")
+    public Result getFriendCount(@RequestParam String username) {
+        return Result.success(friendService.getFriendCountByUsername(username));
+    }
 }

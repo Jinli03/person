@@ -39,4 +39,7 @@ public interface ArticleMapper {
     List<Article> selectPyqPage(Article article);
 
     List<Article> selectFriendsPage(Article article);
+
+    @Select("select count(*) from `article` where username = #{username}")
+    int getArticleCountByUsername(String username);
 }

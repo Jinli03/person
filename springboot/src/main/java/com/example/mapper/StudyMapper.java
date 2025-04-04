@@ -34,4 +34,7 @@ public interface StudyMapper {
 
     @Select("select * from `study` where username = #{username}and date between #{startDate} and #{endDate}")
     List<Study> selectByDateRange( String username, LocalDate startDate, LocalDate endDate);
+
+    @Select("select sum(duration) from `study` where username = #{username}")
+    int getStudyDurationByUsername(String username);
 }

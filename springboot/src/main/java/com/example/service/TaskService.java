@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -123,5 +124,63 @@ public class TaskService {
     public List<Study> selectDataByDate(String username, LocalDate date) {
         List<Study> list = taskMapper.selectDataByDate(username, date);
         return list;
+    }
+
+    public Map<String, Map<String, List<Task>>> loadTasksByDate(String username, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay(); // 2025-03-11 00:00:00
+        LocalDateTime endOfDay = date.atTime(23, 59, 59); // 2025-03-11 23:59:59
+
+        // 查询当天的任务
+        List<Task> allTasks = taskMapper.findAllTasks(startOfDay, endOfDay, username);
+
+        Map<String, Map<String, List<Task>>> taskMap = new HashMap<>();
+
+        for (Task task : allTasks) {
+            String kind = task.getKind();
+            String state = task.getState();
+
+            // 确保 `kind` 存在
+            taskMap.computeIfAbsent(state, k -> new HashMap<>())
+                    // 确保 `state` 存在
+                    .computeIfAbsent(kind, s -> new ArrayList<>())
+                    // 添加任务到对应的列表
+                    .add(task);
+        }
+        System.out.println("任务分组结果: " + taskMap);
+
+        return taskMap;
+    }
+
+    public List<Task> getAllTasksByUsernameAndDate(String username, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay(); // 2025-03-11 00:00:00
+        LocalDateTime endOfDay = date.atTime(23, 59, 59);
+        List<Task> list = taskMapper.findAllTasks(startOfDay, endOfDay, username);
+        return list;
+    }
+
+    public List<Map<String, Object>> getThreeDayTaskSummary(String username, LocalDate startDate, LocalDate endDate) {
+        return taskMapper.getThreeDayTaskSummary(username, startDate, endDate);
+    }
+
+    public Map<String, Long> selectKindCountByDate(String username, LocalDate date) {
+        // Query the database for tasks by username and date
+        List<Task> tasks = taskMapper.selectTasksByDate(username, date);
+
+        // Count the occurrences of each kind
+        return tasks.stream()
+                .collect(Collectors.groupingBy(Task::getKind, Collectors.counting()));
+    }
+
+    public Map<String, Long> selectPriorityCountByDate(String username, LocalDate date) {
+        // Query the database for tasks by username and date
+        List<Task> tasks = taskMapper.selectTasksByDate(username, date);
+
+        // Count the occurrences of each kind
+        return tasks.stream()
+                .collect(Collectors.groupingBy(Task::getPriority, Collectors.counting()));
+    }
+
+    public int getTaskCountByUsername(String username) {
+        return taskMapper.getTaskCountByUsername(username);
     }
 }

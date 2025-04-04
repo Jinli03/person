@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskMapper {
 
@@ -34,4 +35,20 @@ public interface TaskMapper {
 
     @Select("select * from `task` where username = #{username} and DATE(start) = #{date}")
     List<Study> selectDataByDate(String username, LocalDate date);
+
+    @Select("SELECT DATE(start) AS taskDate, " +
+            "COUNT(CASE WHEN state = '已完成' THEN 1 END) AS completedCount, " +
+            "COUNT(CASE WHEN state = '未完成' OR state IS NULL THEN 1 END) AS notCompletedCount " +
+            "FROM task " +
+            "WHERE username = #{username} " +
+            "AND DATE(start) BETWEEN #{startDate} AND #{endDate} " +
+            "GROUP BY taskDate " +
+            "ORDER BY taskDate")
+    List<Map<String, Object>> getThreeDayTaskSummary(String username, LocalDate startDate, LocalDate endDate);
+
+    @Select("SELECT * FROM task WHERE username = #{username} AND DATE(start) = #{date}")
+    List<Task> selectTasksByDate(String username, LocalDate date);
+
+    @Select("select count(*) from `task` where username = #{username} and state = '已完成'")
+    int getTaskCountByUsername(String username);
 }

@@ -67,4 +67,7 @@ public class BookService {
         return list;
     }
 
+    public int getBookCountByUsername(String username) {
+        return bookMapper.getBookCountByUsername(username);
+    }
 }

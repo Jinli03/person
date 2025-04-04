@@ -75,4 +75,9 @@ public class BookController {
         List<Book> list = bookService.bookDisplay(username);
         return Result.success(list);
     }
+
+    @GetMapping("/getBookCount")
+    public Result getBookCount(@RequestParam String username) {
+        return Result.success(bookService.getBookCountByUsername(username));
+    }
 }

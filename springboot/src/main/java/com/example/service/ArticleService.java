@@ -89,4 +89,8 @@ public class ArticleService {
         List<Article> list = articleMapper.selectFriendsPage(article);
         return PageInfo.of(list);
     }
+
+    public int getArticleCountByUsername(String username) {
+        return articleMapper.getArticleCountByUsername(username);
+    }
 }

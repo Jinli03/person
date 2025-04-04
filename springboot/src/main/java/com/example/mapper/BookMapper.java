@@ -29,4 +29,7 @@ public interface BookMapper {
 
     @Select("SELECT * FROM `book` WHERE username = #{username} ORDER BY id DESC LIMIT 4")
     List<Book> bookDisplay(String username);
+
+    @Select("select count(*) from `book` WHERE username = #{username}")
+    int getBookCountByUsername(String username);
 }

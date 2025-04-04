@@ -79,4 +79,9 @@ public class NotionController {
         List<Notion> list = notionService.allNotions(id);
         return Result.success(list);
     }
+
+    @GetMapping("/getNotionCount")
+    public Result getNotionCount(@RequestParam String username) {
+        return Result.success(notionService.getNotionCountByUsername(username));
+    }
 }

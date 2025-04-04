@@ -154,4 +154,9 @@ public class ArticleController {
         PageInfo<Article> pageInfo = articleService.selectFriendsPage(article, pageNum, pageSize);
         return Result.success(pageInfo);
     }
+
+    @GetMapping("/getArticleCount")
+    public Result getArticleCount(@RequestParam String username) {
+        return Result.success(articleService.getArticleCountByUsername(username));
+    }
 }

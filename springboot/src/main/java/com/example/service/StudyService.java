@@ -78,4 +78,8 @@ public class StudyService {
     public List<Study> selectByDateRange(String username, LocalDate startDate, LocalDate endDate) {
         return studyMapper.selectByDateRange(username, startDate, endDate);
     }
+
+    public int getStudyDurationByUsername(String username) {
+        return studyMapper.getStudyDurationByUsername(username);
+    }
 }

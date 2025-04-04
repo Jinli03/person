@@ -251,4 +251,9 @@ public class StudyController {
 
         return Result.success(result);
     }
+
+    @GetMapping("/getStudyDuration")
+    public Result getStudyDuration(@RequestParam String username) {
+        return Result.success(studyService.getStudyDurationByUsername(username));
+    }
 }

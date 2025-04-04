@@ -105,4 +105,8 @@ public class FriendService {
     public void updateByName(String username, String friend, String state) {
         friendMapper.updateByName(username, friend, state);
     }
+
+    public int getFriendCountByUsername(String username) {
+        return friendMapper.getFriendCountByUsername(username);
+    }
 }

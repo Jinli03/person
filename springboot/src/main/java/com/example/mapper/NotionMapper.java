@@ -31,4 +31,7 @@ public interface NotionMapper {
 
     @Select("SELECT * FROM `notion` WHERE book_id = #{id}")
     List<Notion> allNotions(Integer id);
+
+    @Select("select count(*) from `notion` WHERE username = #{username}")
+    int getNotionCountByUsername(String username);
 }

@@ -15,8 +15,11 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/task")
@@ -85,6 +88,20 @@ public class TaskController {
         return Result.success(tasks);
     }
 
+    @GetMapping("/getAllByIdAndDate")
+    public Result getAllTasks(@RequestParam String  username,
+                              @RequestParam LocalDate date) {
+        Map<String, Map<String, List<Task>>> tasks = taskService.loadTasksByDate(username, date);
+        return Result.success(tasks);
+    }
+
+    @GetMapping("/getAllByUsernameAndDate")
+    public Result getAllTasksByUsernameAndDate(@RequestParam String  username,
+                                               @RequestParam LocalDate date) {
+        List<Task> list = taskService.getAllTasksByUsernameAndDate(username, date);
+        return Result.success(list);
+    }
+
     @GetMapping("/getPriorityById/{username}")
     public Result getPriorityTasks(@PathVariable String username) {
         Map<String, Map<String, List<Task>>> tasks = taskService.loadPriorityTasks(username);
@@ -99,4 +116,58 @@ public class TaskController {
         return Result.success(list);
     }
 
+    @GetMapping("/getThreeDayTaskSummary")
+    public Result getThreeDayTaskSummary(@RequestParam String username,
+                                         @RequestParam LocalDate date) {
+        // 计算近三天的日期范围
+        LocalDate startDate = date.minusDays(2);
+        LocalDate endDate = date;
+
+        // 查询任务统计数据
+        List<Map<String, Object>> summaryList = taskService.getThreeDayTaskSummary(username, startDate, endDate);
+
+        // 处理数据
+        List<String> dates = new ArrayList<>();
+        List<Integer> completedCounts = new ArrayList<>();
+        List<Integer> notCompletedCounts = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            LocalDate currentDate = startDate.plusDays(i);
+            dates.add(currentDate.toString());
+
+            // 查找数据
+            Map<String, Object> summary = summaryList.stream()
+                    .filter(s -> s.get("taskDate").toString().equals(currentDate.toString()))
+                    .findFirst()
+                    .orElse(Map.of("completedCount", 0, "notCompletedCount", 0));
+
+            completedCounts.add(((Number) summary.get("completedCount")).intValue());
+            notCompletedCounts.add(((Number) summary.get("notCompletedCount")).intValue());
+        }
+
+        // 返回结果
+        Map<String, Object> result = new HashMap<>();
+        result.put("dates", dates);
+        result.put("completedCounts", completedCounts);
+        result.put("notCompletedCounts", notCompletedCounts);
+
+        return Result.success(result);
+    }
+
+    @GetMapping("/selectKindCountByDate")
+    public Result selectKindCountByDate(@RequestParam String username, @RequestParam LocalDate date) {
+        Map<String, Long> kindCounts = taskService.selectKindCountByDate(username, date);
+        return Result.success(kindCounts);
+    }
+
+    @GetMapping("/selectPriorityCountByDate")
+    public Result selectPriorityCountByDate(@RequestParam String username, @RequestParam LocalDate date) {
+        Map<String, Long> priorityCounts = taskService.selectPriorityCountByDate(username, date);
+        return Result.success(priorityCounts);
+    }
+
+    @GetMapping("/getTaskCount")
+    public Result getTaskCount(@RequestParam String username) {
+        return Result.success(taskService.getTaskCountByUsername(username));
+    }
 }

@@ -70,7 +70,8 @@ import request from "@/utils/request.js";
 import * as echarts from "echarts";
 
 const data = reactive({
-  user: JSON.parse(localStorage.getItem('pilot'))
+  user: JSON.parse(localStorage.getItem('pilot')),
+  tableData: []
 })
 
 const option = {
@@ -79,6 +80,11 @@ const option = {
   },
   tooltip: {
     trigger: 'item'
+  },
+  legend: {
+    data: ['学习时长'],
+    bottom: '0%',
+    left: 'center'
   },
   xAxis: {
     type: 'category',
@@ -105,7 +111,9 @@ const option1 = {
     trigger: 'item'
   },
   legend: {
-    data: ['时长']
+    data: ['时长'],
+    bottom: '0%',
+    left: 'center'
   },
   xAxis: {
     data: []
@@ -128,7 +136,7 @@ const option2 = {
     trigger: 'item'
   },
   legend: {
-    top: '5%',
+    bottom: '0%',
     left: 'center'
   },
   series: [
@@ -249,7 +257,6 @@ onMounted(() => {
   }).then(res => {
     console.log(res.data)
     option2.series[0].data = res.data
-    // 使用刚指定的配置项和数据显示图表。
     myChart2.setOption(option2);
   })
   fetchDataByDate(date.value);
