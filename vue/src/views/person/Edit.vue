@@ -72,21 +72,21 @@
         <el-card class="transparent-card">
           <h3>个人网页链接</h3>
           <el-form ref="linkForm" :model="data" label-width="120px">
-<!--            <el-form-item label="个人博客">-->
-<!--              <el-input v-model="data.blog" placeholder="请输入个人博客链接"></el-input>-->
-<!--            </el-form-item>-->
+            <el-form-item label="Github">
+              <el-input v-model="data.user.github" placeholder="请输入 Github 链接"></el-input>
+            </el-form-item>
 
-<!--            <el-form-item label="GitHub">-->
-<!--              <el-input v-model="data.github" placeholder="请输入 GitHub 链接"></el-input>-->
-<!--            </el-form-item>-->
+            <el-form-item label="TikTok">
+              <el-input v-model="data.user.tiktok" placeholder="请输入 TikTok 链接"></el-input>
+            </el-form-item>
 
-<!--            <el-form-item label="LinkedIn">-->
-<!--              <el-input v-model="data.linkedin" placeholder="请输入 LinkedIn 链接"></el-input>-->
-<!--            </el-form-item>-->
+            <el-form-item label="小红书">
+              <el-input v-model="data.user.redbook" placeholder="请输入 小红书 链接"></el-input>
+            </el-form-item>
 
-<!--            <el-form-item label="其他链接">-->
-<!--              <el-input v-model="data.other" placeholder="请输入其他个人网页链接"></el-input>-->
-<!--            </el-form-item>-->
+            <el-form-item label="哔哩哔哩">
+              <el-input v-model="data.user.bilibili" placeholder="请输入 哔哩哔哩 链接"></el-input>
+            </el-form-item>
             <el-row>
               <el-col :span="24" style="text-align: center; margin-top: 20px;">
                 <el-button type="primary" @click="updateUser">提交</el-button>
@@ -108,7 +108,7 @@ import request from "@/utils/request.js";
 const formRef = ref(null);
 
 const data = reactive({
-  user: JSON.parse(localStorage.getItem('pilot')) || {
+    user: JSON.parse(localStorage.getItem('pilot')) || {
     id: '',
     name: '',
     username: '',
@@ -116,7 +116,11 @@ const data = reactive({
     sex: '',
     age: null,
     role: '',
-    avatar: ''
+    avatar: '',
+    github: '',
+    tiktok: '',
+    redbook: '',
+    bilibili: ''
   },
   // avatar: '',
   // blog: '',

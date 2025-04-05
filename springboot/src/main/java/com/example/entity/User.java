@@ -17,6 +17,10 @@ public class User {
     private String avatar;
 
     private String newPassword;
+    private String github;
+    private String tiktok;
+    private String redbook;
+    private String bilibili;
 
     @Override
     public String toString() {
@@ -102,5 +106,37 @@ public class User {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getGithub() {
+        return github;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
+    }
+
+    public String getTiktok() {
+        return tiktok;
+    }
+
+    public void setTiktok(String tiktok) {
+        this.tiktok = tiktok;
+    }
+
+    public String getRedbook() {
+        return redbook;
+    }
+
+    public void setRedbook(String redbook) {
+        this.redbook = redbook;
+    }
+
+    public String getBilibili() {
+        return bilibili;
+    }
+
+    public void setBilibili(String bilibili) {
+        this.bilibili = bilibili;
     }
 }

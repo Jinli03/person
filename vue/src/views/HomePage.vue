@@ -84,22 +84,22 @@
         <div style="display: flex">
           <div>
             <el-card class="transparent-card">
-              <img style="width:30px; " src="@/assets/github.png">
+              <img style="width:30px; cursor: pointer;" src="@/assets/github.png" cursor @click="open(data.user.github);">
             </el-card>
           </div>
           <div style="margin-left: 45px">
             <el-card class="transparent-card">
-              <img style="width:30px; " src="@/assets/tiktok.png">
+              <img style="width:30px; cursor: pointer;" src="@/assets/tiktok.png" cursor @click="open(data.user.tiktok);">
             </el-card>
           </div>
           <div style="margin-left: 45px">
             <el-card class="transparent-card">
-              <img style="width:30px; " src="@/assets/redbook.png">
+              <img style="width:30px; cursor: pointer;" src="@/assets/redbook.png" cursor @click="open(data.user.redbook);">
             </el-card>
           </div>
           <div style="margin-left: 45px">
             <el-card class="transparent-card">
-              <img style="width:30px; " src="@/assets/bilibili.png">
+              <img style="width:30px; cursor: pointer;" src="@/assets/bilibili.png" cursor @click="open(data.user.bilibili)">
             </el-card>
           </div>
         </div>
@@ -125,6 +125,7 @@
 import router from "@/router/index.js";
 import {reactive, ref, onMounted} from "vue";
 import {Plus} from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
 const link = document.createElement('link');
 link.rel = 'stylesheet';
 link.href = 'https://cdn.jsdelivr.net/npm/qweather-icons@1.6.0/font/qweather-icons.css';
@@ -146,6 +147,15 @@ const data = reactive({
     ],
   },
 })
+
+function open(data) {
+  if (data) {
+    window.open(data, '_blank')
+  } else {
+    ElMessage.error('地址未设置')
+  }
+}
+
 
 const getMonthDay = (fxDate) => {
   if (!fxDate) return 'Loading...'; // Handle undefined date

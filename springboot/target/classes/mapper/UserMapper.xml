@@ -12,12 +12,12 @@
     </select>
 
     <insert id="insert" parameterType="com.example.entity.User">
-        insert into `user` (name, username, password, sex, age, role, avatar)
-        values(#{name}, #{username}, #{password}, #{sex}, #{age}, #{role}, #{avatar})
+        insert into `user` (name, username, password, sex, age, role, avatar, github, tiktok, redbook, bilibili)
+        values(#{name}, #{username}, #{password}, #{sex}, #{age}, #{role}, #{avatar}, #{github}, #{tiktok}, #{redbook}, #{bilibili})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.User">
-        update `user` set name = #{name}, username = #{username}, password = #{password}, sex =#{sex}, age = #{age}, role = #{role}, avatar = #{avatar} where id = #{id}
+        update `user` set name = #{name}, username = #{username}, password = #{password}, sex =#{sex}, age = #{age}, role = #{role}, avatar = #{avatar} , github = #{github}, tiktok = #{tiktok}, redbook = #{redbook}, bilibili = #{bilibili} where id = #{id}
     </update>
 
 </mapper>
