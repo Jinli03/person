@@ -7,9 +7,9 @@
             class="animated-container"
         >
           <h1 class="animated-text" style="font-size: 70px; color: white">
-            Welcome to! <br />
+            Welcome to <br />
             Your <br />
-            Second Brain
+            Second Brain!
           </h1>
         </div>
 

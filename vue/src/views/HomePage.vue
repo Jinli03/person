@@ -108,7 +108,7 @@
   </el-row>
   <el-dialog v-model="data.formVisible" title="城市" width="500" destroy-on-close>
     <el-form ref="formRef"  :model="data.city" style="padding: 20px">
-      <el-form-item label="标题" prop="city">
+      <el-form-item label="城市" prop="city">
         <el-input v-model="data.city" autocomplete="off" placeholder="请输入城市"/>
       </el-form-item>
     </el-form>

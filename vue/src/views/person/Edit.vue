@@ -4,7 +4,7 @@
       <!-- 左侧个人信息表单 -->
       <el-col :span="12">
         <el-card class="transparent-card">
-          <el-form :model="data" ref="formRef" :rules="rules" label-width="120px" class="form-container">
+          <el-form :model="data.user" ref="formRef" :rules="rules" label-width="120px" class="form-container">
             <div style="display: flex; justify-content: center; margin-bottom: 10px">
               <el-upload
                   class="avatar-uploader"
@@ -71,7 +71,7 @@
       <el-col :span="12">
         <el-card class="transparent-card">
           <h3>个人网页链接</h3>
-          <el-form ref="linkForm" :model="data" label-width="120px">
+          <el-form ref="linkForm" :model="data.user" label-width="120px">
             <el-form-item label="Github">
               <el-input v-model="data.user.github" placeholder="请输入 Github 链接"></el-input>
             </el-form-item>
@@ -101,7 +101,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import { ElMessage } from "element-plus";
 import request from "@/utils/request.js";
 
@@ -122,6 +122,7 @@ const data = reactive({
     redbook: '',
     bilibili: ''
   },
+  form: {}
   // avatar: '',
   // blog: '',
   // github: '',
@@ -141,6 +142,7 @@ const updateUser = () => {
   request.put('/user/updateById', data.user).then(res => {
     if (res.code === '200') {
       ElMessage.success("更新成功！");
+      load()
       localStorage.setItem('pilot', JSON.stringify(data.user));
       emits('updateUser'); // 触发父组件的更新逻辑
     }
@@ -156,6 +158,24 @@ const resetForm = () => {
   formRef.value?.resetFields();
 };
 
+onMounted(() => {
+  load();
+});
+
+const load = () => {
+  request.get('/user/selectByUsername', {
+    params: {
+      username: data.user.username
+    }
+  }).then(res => {
+    if (res.code === '200') {
+      console.log('用户信息：', res.data);
+      data.user = res.data
+    } else {
+      ElMessage.error(res.msg);
+    }
+  });
+}
 </script>
 
 <style scoped>

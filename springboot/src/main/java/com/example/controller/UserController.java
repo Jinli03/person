@@ -21,7 +21,12 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    
+
+    @GetMapping("/selectByUsername")
+    public Result selectByUsername(@RequestParam String username) {
+        User user = userService.selectByUsername(username);
+        return Result.success(user);
+    }
 
     @GetMapping("/selectAll")
     public Result selectAll(User user) {

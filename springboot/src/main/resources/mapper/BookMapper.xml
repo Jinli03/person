@@ -13,12 +13,12 @@
     </select>
 
     <insert id="insert" parameterType="com.example.entity.Book">
-        insert into `book` (username, name, author, des, cover, start, end, duration, permission, book_id, state)
-        values(#{username}, #{name}, #{author}, #{des}, #{cover}, #{start}, #{end}, #{duration}, #{permission}, #{bookId}, #{state})
+        insert into `book` (username, name, author, des, cover, start, end, duration, permission, state)
+        values(#{username}, #{name}, #{author}, #{des}, #{cover}, #{start}, #{end}, #{duration}, #{permission}, #{state})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.Book">
-        update `book` set username = #{username}, name = #{name}, author = #{author}, des = #{des}, cover = #{cover}, start = #{start}, end = #{end}, duration = #{duration}, permission = #{permission}, book_id = #{bookId}, state = #{state} where id = #{id}
+        update `book` set username = #{username}, name = #{name}, author = #{author}, des = #{des}, cover = #{cover}, start = #{start}, end = #{end}, duration = #{duration}, permission = #{permission}, state = #{state} where id = #{id}
     </update>
 
 </mapper>

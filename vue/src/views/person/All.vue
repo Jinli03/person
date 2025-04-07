@@ -71,7 +71,11 @@
             </div>
           </el-col>
           <el-col :span="12">
-
+            <img
+                src="https://pic3.zhimg.com/v2-b43c05a6561611a696cb619d0e08f0be_r.jpg"
+                alt="图片"
+                style="width: 100%; height: auto; border-radius: 10px;"
+            />
           </el-col>
           <el-col :span="6">
             <div style="margin: 20px;">

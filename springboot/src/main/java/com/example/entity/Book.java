@@ -20,7 +20,6 @@ public class Book {
     private LocalDateTime end;
     private float duration;
     private String permission;
-    private Integer bookId;
     private String state;
 
     public String getState() {
@@ -111,11 +110,4 @@ public class Book {
         this.permission = permission;
     }
 
-    public Integer getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
-    }
 }

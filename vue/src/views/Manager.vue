@@ -27,7 +27,6 @@
               <template #default>
                 <el-button @click="router.push('/manager/task')" style="width: 120px; height: 40px">清单</el-button>
                 <el-button @click="router.push('/manager/habit')" style="width: 120px; height: 40px">习惯</el-button>
-                <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">备忘录</el-button>
               </template>
             </el-popover>
             <el-popover  popper-style="background-color: transparent; border: none">
