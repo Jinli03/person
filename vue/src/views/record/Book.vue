@@ -90,7 +90,7 @@
         <el-date-picker v-model="data.bookForm.end" type="datetime" placeholder="选择结束阅读时间"/>
       </el-form-item>
       <el-form-item label="总阅读时长" prop="duration">
-        <el-input-number v-model="data.bookForm.duration" :precision="2" :step="1.0" :max="10" placeholder="请输入总阅读时长"/>
+        <el-input-number v-model="data.bookForm.duration" :precision="2" :step="1.0" :max="50" placeholder="请输入总阅读时长"/>
       </el-form-item>
       <el-form-item label="状态" prop="state">
         <el-radio-group v-model="data.bookForm.state">

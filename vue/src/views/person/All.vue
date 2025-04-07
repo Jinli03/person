@@ -223,7 +223,7 @@ onMounted(() => {
   padding: 20px;
   border-radius: 10px; /* 可选：为 el-main 添加圆角 */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 可选：添加阴影效果 */
-  height: 630px;
+  height: 640px;
   margin-left: 20px;
   margin-right: 20px;
 }

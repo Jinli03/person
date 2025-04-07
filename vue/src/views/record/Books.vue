@@ -107,7 +107,7 @@
         <el-input v-model="data.form.name" autocomplete="off" placeholder="请输入标题"/>
       </el-form-item>
       <el-form-item label="作者" prop="author">
-        <el-input v-model="data.form.author" autocomplete="off" placeholder="请输入种类"/>
+        <el-input v-model="data.form.author" autocomplete="off" placeholder="请输入作者"/>
       </el-form-item>
       <el-form-item label="描述" prop="des">
         <el-input v-model="data.form.des" autocomplete="off" placeholder="请输入描述"/>
@@ -398,5 +398,26 @@ load()
   margin-top: auto; /* 让 footer 贴到底部 */
 }
 
+.avatar-uploader .avatar {
+  width: 78px;
+  height: 78px;
+  display: block;
+}
 
+</style>
+
+<style>
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
 </style>

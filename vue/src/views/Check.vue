@@ -47,15 +47,15 @@
           <el-table-column label="开始时间" prop="start" align="center"></el-table-column>
           <el-table-column label="完成时间" prop="finish" align="center"></el-table-column>
           <el-table-column label="状态" prop="state" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
-            <template #default="scope">
-              <div style="display: flex; justify-content: center; gap: 10px;">
-                <el-button type="primary" :icon="Edit" circle @click="editContent(scope.row)"></el-button>
-                <el-button type="primary" :icon="Edit" circle @click="handleEdit(scope.row)"></el-button>
-                <el-button type="danger" :icon="Delete" circle @click="del(scope.row.id)"></el-button>
-              </div>
-            </template>
-          </el-table-column>
+<!--          <el-table-column label="操作" align="center">-->
+<!--            <template #default="scope">-->
+<!--              <div style="display: flex; justify-content: center; gap: 10px;">-->
+<!--                <el-button type="primary" :icon="Edit" circle @click="editContent(scope.row)"></el-button>-->
+<!--                <el-button type="primary" :icon="Edit" circle @click="handleEdit(scope.row)"></el-button>-->
+<!--                <el-button type="danger" :icon="Delete" circle @click="del(scope.row.id)"></el-button>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
         </el-table>
       </el-card>
     </el-col>
