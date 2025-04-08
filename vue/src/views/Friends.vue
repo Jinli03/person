@@ -107,7 +107,7 @@
 import router from "@/router/index.js";
 import {ref, reactive, onMounted} from "vue";
 import request from "@/utils/request.js";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 import {Delete, Edit, Plus, Reading} from "@element-plus/icons-vue";
 
 const formRef = ref()
@@ -186,6 +186,7 @@ const pass = (id) => {
 }
 
 const del = (friend) => {
+  ElMessageBox.confirm('确认？', '确认', {type: 'warning'}).then( () => {
   request.put('/friend/updateByName', null, {
     params: {
       username: data.user.username,
@@ -218,6 +219,7 @@ const del = (friend) => {
     console.error("删除好友失败:", err);
     ElMessage.error("删除失败，请稍后重试");
   });
+  }).catch()
 }
 
 const selectComment = () => {
