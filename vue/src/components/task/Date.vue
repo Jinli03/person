@@ -382,6 +382,8 @@ const getKindColor = (kind) => {
   return "black"; // 默认颜色
 }
 
+load()
+
 const getPriorityColor = (priority) => {
   if (priority === "Ⅰ重要且紧急") return "red";
   if (priority === "Ⅱ重要不紧急") return "orange";

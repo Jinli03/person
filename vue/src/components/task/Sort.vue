@@ -536,6 +536,8 @@ const load = () => {
 onMounted(() => {
   load();
 });
+
+load()
 </script>
 
 <style scoped>

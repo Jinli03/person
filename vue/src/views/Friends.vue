@@ -155,7 +155,8 @@ const accept = (id, friend) => {
     },
   }).then(res => {
     if (res.code === '200') {
-      ElMessage.success("好友申请已发送！");
+      ElMessage.success("添加好友成功！");
+      load()
     } else {
       ElMessage.error("添加好友失败：" + res.msg);
     }
@@ -163,7 +164,6 @@ const accept = (id, friend) => {
     console.error("添加好友失败:", err);
     ElMessage.error("请求失败，请稍后重试");
   });
-  load()
 }
 
 const pass = (id) => {

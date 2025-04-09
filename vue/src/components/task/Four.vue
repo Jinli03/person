@@ -510,6 +510,8 @@ const edit = () => {
 onMounted(() => {
   load();
 });
+
+load()
 </script>
 
 

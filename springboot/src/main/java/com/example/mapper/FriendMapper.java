@@ -51,6 +51,6 @@ public interface FriendMapper {
     @Update("update `friend` set state = #{state} where username = #{username} and friend = #{friend}")
     void updateByName(String username, String friend, String state);
 
-    @Select("select count(*) from `friend` where username = #{username}")
+    @Select("select count(*) from `friend` where username = #{username} and state = '好友'")
     int getFriendCountByUsername(String username);
 }
