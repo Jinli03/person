@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.HealthMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Health">
+        select * from health
+    </select>
+
+    <insert id="insert" parameterType="com.example.entity.Health">
+        insert into `health` (username, date, kind, data)
+        values(#{username} ,#{date}, #{kind}, #{data})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Health">
+        update `health` set username = #{username}, date = #{date}, kind = #{kind}, data = #{data} where id = #{id}
+    </update>
+
+</mapper>

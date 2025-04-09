@@ -36,7 +36,7 @@
                 </el-card>
               </template>
               <template #default>
-                <el-button @click="router.push('/manager/data')" style="width: 120px; height: 40px">健康</el-button>
+                <el-button @click="router.push('/manager/health')" style="width: 120px; height: 40px">健康</el-button>
                 <el-button @click="router.push('/manager/study')" style="width: 120px; height: 40px">学习时长</el-button>
                 <el-button @click="router.push('/manager/check')" style="width: 120px; height: 40px">打卡记录</el-button>
                 <el-button @click="router.push('/manager/books')" style="width: 120px; height: 40px">阅读记录</el-button>

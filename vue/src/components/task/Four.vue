@@ -6,7 +6,7 @@
 <template>
   <el-row :gutter="10">
     <el-col :span="12">
-      <el-card class="transparent-card" style="height: 250px">
+      <el-card class="transparent-card" style="height: 280px">
         <div style="display: flex; ">
           <span style="fontSize: 15px; margin-right: 550px;  color: #ff4949">Ⅰ重要且紧急</span>
           <el-button type="danger" :icon="Plus" circle @click="addOne()"></el-button>
@@ -51,7 +51,7 @@
       </el-card>
     </el-col>
     <el-col :span="12">
-      <el-card class="transparent-card" style="height: 250px">
+      <el-card class="transparent-card" style="height: 280px">
         <div style="display: flex; ">
           <span style="fontSize: 15px; margin-right: 550px; color: #ffad00">Ⅱ重要不紧急</span>
           <el-button type="warning" :icon="Plus" circle @click="addTwo()"></el-button>
@@ -60,6 +60,7 @@
         <el-row :gutter="20">
           <el-col :span="12">
             <el-card class="four-card">
+              <div class="scrollable-content">
               <div v-if="data.tasks['未完成']">
                 <div v-for="task in data.tasks['未完成']['Ⅱ重要不紧急']" :key="task.id" class="task-item">
                   <div style="width: 70%">
@@ -72,6 +73,7 @@
                   <span :style="{ color: getColor(task.kind)}">{{ task.kind }}</span>
                   <el-button :icon="More" circle @click="update(task.id)"></el-button>
                 </div>
+              </div>
               </div>
             </el-card>
           </el-col>
@@ -99,7 +101,7 @@
   <div style="margin: 10px"></div>
   <el-row :gutter="10">
     <el-col :span="12">
-      <el-card class="transparent-card" style="height: 250px">
+      <el-card class="transparent-card" style="height: 280px">
         <div style="display: flex; ">
           <span style="fontSize: 15px; margin-right: 535px; color: #0066bc">Ⅲ不重要但紧急</span>
           <el-button type="primary" :icon="Plus" circle @click="addThree()"></el-button>
@@ -144,7 +146,7 @@
       </el-card>
     </el-col>
     <el-col :span="12">
-      <el-card class="transparent-card" style="height: 250px">
+      <el-card class="transparent-card" style="height: 280px">
         <div style="display: flex; ">
           <span style="fontSize: 15px; margin-right: 535px; color: #13ce66">Ⅳ不重要不紧急</span>
           <el-button type="success" :icon="Plus" circle @click="addFour()"></el-button>
@@ -528,6 +530,27 @@ onMounted(() => {
 }
 
 .four-card{
-  height: 180px;
+  height: 200px;
+}
+
+/* 滚动内容区域 */
+.scrollable-content {
+  height: 100%; /* 占满卡片高度 */
+  overflow-y: auto; /* 启用垂直滚动条 */
+  padding-right: 10px; /* 避免滚动条遮挡内容 */
+}
+
+/* 自定义滚动条样式（可选） */
+.scrollable-content::-webkit-scrollbar {
+  width: 6px; /* 滚动条宽度 */
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1; /* 滚动条滑块颜色 */
+  border-radius: 3px;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+  background: #f1f1f1; /* 滚动条轨道颜色 */
 }
 </style>

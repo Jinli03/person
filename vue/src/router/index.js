@@ -12,6 +12,7 @@ const router = createRouter({
             { path: 'admin', name: 'admin', meta:{title: '管理员信息'}, component: () => import('../views/Admin.vue') },
             // { path: 'person', name: 'person', meta:{title: '个人信息'}, component: () => import('../views/Person.vue') },
             { path: 'homePage', name: 'homePage', meta:{title: '主页'}, component: () => import('../views/HomePage.vue') },
+            { path: 'health', name: 'health', meta:{title: '健康'}, component: () => import('../views/Health.vue') },
             { path: 'share', name: 'share', meta:{title: '知识分享'}, component: () => import('../views/Share.vue') },
             { path: 'study', name: 'study', meta:{title: '学习时长'}, component: () => import('../views/Study.vue') },
             { path: 'wall', name: 'wall', meta:{title: '勋章墙'}, component: () => import('../views/Wall.vue') },
