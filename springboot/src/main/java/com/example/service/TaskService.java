@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -182,5 +179,15 @@ public class TaskService {
 
     public int getTaskCountByUsername(String username) {
         return taskMapper.getTaskCountByUsername(username);
+    }
+
+    public List<Task> recommendTasks(String username) {
+        List<Task> taskList = taskMapper.getTodayImportantUnfinishedTasks(username);
+
+        // 简单推荐策略：按优先级排序并取前三
+        return taskList.stream()
+                .sorted(Comparator.comparing(Task::getPriority)) // 可扩展优先级权重
+                .limit(3)
+                .collect(Collectors.toList());
     }
 }

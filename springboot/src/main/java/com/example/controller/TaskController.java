@@ -170,4 +170,10 @@ public class TaskController {
     public Result getTaskCount(@RequestParam String username) {
         return Result.success(taskService.getTaskCountByUsername(username));
     }
+
+    @GetMapping("/recommend")
+    public Result recommend(@RequestParam String username) {
+        List<Task> recommendations = taskService.recommendTasks(username);
+        return Result.success(recommendations);
+    }
 }

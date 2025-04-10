@@ -51,4 +51,11 @@ public interface TaskMapper {
 
     @Select("select count(*) from `task` where username = #{username} and state = '已完成'")
     int getTaskCountByUsername(String username);
+
+    @Select("SELECT * FROM task " +
+            "WHERE username = #{username} " +
+            "AND state = '未完成' " +
+            "AND DATE(start) = CURDATE() " +
+            "AND priority IN ('Ⅰ重要且紧急', 'Ⅱ重要不紧急')")
+    List<Task> getTodayImportantUnfinishedTasks(String username);
 }
