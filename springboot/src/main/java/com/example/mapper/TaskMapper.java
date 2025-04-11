@@ -58,4 +58,10 @@ public interface TaskMapper {
             "AND DATE(start) = CURDATE() " +
             "AND priority IN ('Ⅰ重要且紧急', 'Ⅱ重要不紧急')")
     List<Task> getTodayImportantUnfinishedTasks(String username);
+
+    List<String> getAllUsernames();
+
+    List<Task> getTasksByUser(String username);
+
+    List<Task> getUnfinishedTasksByUser(String username);
 }

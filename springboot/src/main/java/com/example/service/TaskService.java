@@ -190,4 +190,62 @@ public class TaskService {
                 .limit(3)
                 .collect(Collectors.toList());
     }
+
+    public List<Task> recommendTasksByUserSimilarity(String username) {
+        // 获取所有用户
+        List<String> allUsers = taskMapper.getAllUsernames();
+        Map<String, Map<String, Integer>> userProfiles = new HashMap<>();
+
+        // 构建用户特征向量
+        for (String user : allUsers) {
+            List<Task> tasks = taskMapper.getTasksByUser(user); // 获取用户的所有任务，不区分状态
+            Map<String, Integer> profile = new HashMap<>();
+            for (Task task : tasks) {
+                String key = task.getKind() + "_" + task.getPriority();
+                profile.put(key, profile.getOrDefault(key, 0) + 1);
+            }
+            userProfiles.put(user, profile);
+        }
+
+        // 获取目标用户的特征向量
+        Map<String, Integer> targetProfile = userProfiles.get(username);
+        if (targetProfile == null) return Collections.emptyList();
+
+        // 找到最相似的用户
+        double maxSim = -1;
+        String mostSimilarUser = null;
+
+        for (Map.Entry<String, Map<String, Integer>> entry : userProfiles.entrySet()) {
+            if (entry.getKey().equals(username)) continue;
+            double sim = cosineSimilarity(targetProfile, entry.getValue());
+            if (sim > maxSim) {
+                maxSim = sim;
+                mostSimilarUser = entry.getKey();
+            }
+        }
+
+        // 返回最相似用户的所有任务，不区分完成状态
+        if (mostSimilarUser != null) {
+            return taskMapper.getTasksByUser(mostSimilarUser); // 修改为获取所有任务
+        }
+
+        return Collections.emptyList();
+    }
+
+    private double cosineSimilarity(Map<String, Integer> v1, Map<String, Integer> v2) {
+        Set<String> keys = new HashSet<>();
+        keys.addAll(v1.keySet());
+        keys.addAll(v2.keySet());
+
+        double dot = 0, norm1 = 0, norm2 = 0;
+        for (String key : keys) {
+            int a = v1.getOrDefault(key, 0);
+            int b = v2.getOrDefault(key, 0);
+            dot += a * b;
+            norm1 += a * a;
+            norm2 += b * b;
+        }
+
+        return (norm1 == 0 || norm2 == 0) ? 0 : dot / (Math.sqrt(norm1) * Math.sqrt(norm2));
+    }
 }

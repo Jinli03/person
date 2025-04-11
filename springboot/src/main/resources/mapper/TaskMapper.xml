@@ -17,4 +17,16 @@
         update `task` set username = #{username}, kind = #{kind}, priority = #{priority}, content = #{content}, note = #{note}, tag = #{tag}, start = #{start}, finish = #{finish}, warn = #{warn}, state = #{state} where id = #{id}
     </update>
 
+    <select id="getAllUsernames" resultType="string">
+        SELECT DISTINCT username FROM task
+    </select>
+
+    <select id="getTasksByUser" resultType="com.example.entity.Task">
+        SELECT * FROM task WHERE username = #{username}
+    </select>
+
+    <select id="getUnfinishedTasksByUser" resultType="com.example.entity.Task">
+        SELECT * FROM task WHERE username = #{username} AND state = '未完成'
+    </select>
+
 </mapper>
