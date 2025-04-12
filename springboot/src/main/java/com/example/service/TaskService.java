@@ -226,7 +226,7 @@ public class TaskService {
 
         // 返回最相似用户的所有任务，不区分完成状态
         if (mostSimilarUser != null) {
-            return taskMapper.getTasksByUser(mostSimilarUser); // 修改为获取所有任务
+            return taskMapper.getTasksByTargetUser(mostSimilarUser); // 修改为获取所有任务
         }
 
         return Collections.emptyList();

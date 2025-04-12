@@ -63,5 +63,5 @@ public interface TaskMapper {
 
     List<Task> getTasksByUser(String username);
 
-    List<Task> getUnfinishedTasksByUser(String username);
+    List<Task> getTasksByTargetUser(String username);
 }

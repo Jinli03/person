@@ -22,7 +22,14 @@
     </select>
 
     <select id="getTasksByUser" resultType="com.example.entity.Task">
-        SELECT * FROM task WHERE username = #{username}
+        SELECT * FROM task
+        WHERE username = #{username}
+    </select>
+
+    <select id="getTasksByTargetUser" resultType="com.example.entity.Task">
+        SELECT * FROM task
+        WHERE username = #{username}
+          AND  start >= DATE_SUB(CURDATE(), INTERVAL 3 DAY)
     </select>
 
     <select id="getUnfinishedTasksByUser" resultType="com.example.entity.Task">
